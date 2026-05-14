@@ -147,24 +147,60 @@ export default function OrderCard({ order, onEdit, onDelete, onStatusToggle }) {
           {itemCount === 0 ? (
             <div className="px-4 py-6 text-center text-sm text-gray-400">尚無商品明細</div>
           ) : (
-            <div className="divide-y divide-gray-50">
-              {order.purchase_items.map((item) => (
-                <div key={item.id} className="px-4 py-3 flex items-center gap-3">
-                  <PhotoThumbnail url={item.photo_url} name={item.item_name} />
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-gray-800 truncate">{item.item_name}</p>
-                    <p className="text-xs text-gray-500 mt-0.5">
-                      單價：{formatNumber(item.unit_price)} {item.currency} &nbsp;×&nbsp; {item.quantity}
-                    </p>
-                  </div>
-                  <div className="text-right flex-shrink-0">
-                    <p className="text-sm font-semibold text-gray-800">
-                      {formatNumber(item.total_price ?? (item.quantity * item.unit_price))} {item.currency}
-                    </p>
-                    <p className="text-xs text-gray-400">小計</p>
-                  </div>
-                </div>
-              ))}
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="bg-gray-50 text-xs text-gray-500 border-b border-gray-100">
+                    <th className="text-left px-4 py-2 font-medium w-10"></th>
+                    <th className="text-left px-3 py-2 font-medium">商品名稱</th>
+                    <th className="text-left px-3 py-2 font-medium">顏色</th>
+                    <th className="text-right px-3 py-2 font-medium">數量</th>
+                    <th className="text-right px-3 py-2 font-medium">單價</th>
+                    <th className="text-right px-4 py-2 font-medium">總計</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-50">
+                  {order.purchase_items.map((item) => {
+                    const total = item.total_price ?? (item.quantity * item.unit_price)
+                    return (
+                      <tr key={item.id} className="hover:bg-gray-50">
+                        <td className="px-4 py-2">
+                          <PhotoThumbnail url={item.photo_url} name={item.item_name} />
+                        </td>
+                        <td className="px-3 py-2 font-medium text-gray-800">{item.item_name}</td>
+                        <td className="px-3 py-2 text-gray-500">{item.color || '—'}</td>
+                        <td className="px-3 py-2 text-right text-gray-700">{item.quantity}</td>
+                        <td className="px-3 py-2 text-right text-gray-700">
+                          {formatNumber(item.unit_price)} {item.currency}
+                        </td>
+                        <td className="px-4 py-2 text-right font-semibold text-gray-800">
+                          {formatNumber(total)} {item.currency}
+                        </td>
+                      </tr>
+                    )
+                  })}
+                </tbody>
+                <tfoot>
+                  {order.shipping_fee > 0 && (
+                    <tr className="border-t border-gray-100 bg-gray-50">
+                      <td colSpan={5} className="px-4 py-2 text-right text-xs text-gray-500">運費</td>
+                      <td className="px-4 py-2 text-right text-sm font-medium text-gray-700">
+                        {formatNumber(order.shipping_fee)} TWD
+                      </td>
+                    </tr>
+                  )}
+                  <tr className="border-t-2 border-gray-200 bg-gray-50">
+                    <td colSpan={5} className="px-4 py-2.5 text-right text-xs font-semibold text-gray-600">合計</td>
+                    <td className="px-4 py-2.5 text-right text-base font-bold text-indigo-700">
+                      {formatNumber(
+                        (order.purchase_items.reduce((sum, it) =>
+                          sum + (it.total_price ?? it.quantity * it.unit_price), 0
+                        )) + (order.shipping_fee || 0)
+                      )} {order.purchase_items[0]?.currency || 'TWD'}
+                    </td>
+                  </tr>
+                </tfoot>
+              </table>
             </div>
           )}
         </div>

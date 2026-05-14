@@ -43,6 +43,7 @@ export default function PurchaseManager({ prefilledOrder, onPrefilledConsumed })
   const [filterStatus, setFilterStatus] = useState('全部')
   const [deleteConfirm, setDeleteConfirm] = useState(null)
   const [pendingPrefill, setPendingPrefill] = useState(null)
+  const [filterMonth, setFilterMonth] = useState('全部')
 
   useEffect(() => {
     if (prefilledOrder) {
@@ -82,7 +83,7 @@ export default function PurchaseManager({ prefilledOrder, onPrefilledConsumed })
       // Update order
       const { error: orderErr } = await supabase
         .from('purchase_orders')
-        .update(orderData)
+        .update({ ...orderData, shipping_fee: parseFloat(orderData.shipping_fee) || 0 })
         .eq('id', editOrder.id)
       if (orderErr) throw orderErr
 
@@ -96,6 +97,7 @@ export default function PurchaseManager({ prefilledOrder, onPrefilledConsumed })
       const itemsToInsert = items.map(it => ({
         order_id: editOrder.id,
         item_name: it.item_name,
+        color: it.color || null,
         photo_url: it.photo_url || null,
         quantity: parseInt(it.quantity) || 1,
         unit_price: parseFloat(it.unit_price) || 0,
@@ -107,7 +109,7 @@ export default function PurchaseManager({ prefilledOrder, onPrefilledConsumed })
       // Insert new order
       const { data: newOrder, error: orderErr } = await supabase
         .from('purchase_orders')
-        .insert(orderData)
+        .insert({ ...orderData, shipping_fee: parseFloat(orderData.shipping_fee) || 0 })
         .select()
         .single()
       if (orderErr) throw orderErr
@@ -115,6 +117,7 @@ export default function PurchaseManager({ prefilledOrder, onPrefilledConsumed })
       const itemsToInsert = items.map(it => ({
         order_id: newOrder.id,
         item_name: it.item_name,
+        color: it.color || null,
         photo_url: it.photo_url || null,
         quantity: parseInt(it.quantity) || 1,
         unit_price: parseFloat(it.unit_price) || 0,
@@ -153,9 +156,14 @@ export default function PurchaseManager({ prefilledOrder, onPrefilledConsumed })
     setOrders(prev => prev.map(o => o.id === orderId ? { ...o, status: newStatus } : o))
   }
 
+  const availableMonths = [...new Set(
+    orders.map(o => o.order_date?.slice(0, 7)).filter(Boolean)
+  )].sort().reverse()
+
   const filteredOrders = orders.filter(o => {
     if (filterCountry !== '全部' && o.country !== filterCountry) return false
     if (filterStatus !== '全部' && o.status !== filterStatus) return false
+    if (filterMonth !== '全部' && o.order_date?.slice(0, 7) !== filterMonth) return false
     return true
   })
 
@@ -195,6 +203,18 @@ export default function PurchaseManager({ prefilledOrder, onPrefilledConsumed })
               </button>
             ))}
           </div>
+
+          {/* Month filter */}
+          <select
+            value={filterMonth}
+            onChange={e => setFilterMonth(e.target.value)}
+            className="px-3 py-1.5 text-xs font-medium rounded-lg border border-gray-200 bg-white shadow-sm text-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-400"
+          >
+            <option value="全部">全部月份</option>
+            {availableMonths.map(m => (
+              <option key={m} value={m}>{m.replace('-', ' 年 ')} 月</option>
+            ))}
+          </select>
         </div>
 
         <button

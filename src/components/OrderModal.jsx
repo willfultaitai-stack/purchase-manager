@@ -10,25 +10,21 @@ const STATUS_STYLES = {
   '已出貨': 'bg-green-600 text-white border-green-600',
 }
 
-const emptyItem = () => ({
-  item_name: '',
-  photo_url: '',
-  quantity: 1,
-  unit_price: '',
-  currency: 'TWD',
-})
+const emptyVariant = () => ({ color: '', quantity: 1, unit_price: '' })
+const emptyProduct = () => ({ item_name: '', photo_url: '', variants: [emptyVariant()] })
 
 const emptyOrder = (initial) => ({
   country: initial?.country || '韓國',
   brand_name: initial?.brand_name || '',
   status: initial?.status || '待訂貨',
   order_date: new Date().toISOString().split('T')[0],
+  shipping_fee: '',
 })
 
 export default function OrderModal({ isOpen, onClose, onSave, editOrder, initialData }) {
   const [step, setStep] = useState(1)
   const [orderData, setOrderData] = useState(emptyOrder())
-  const [items, setItems] = useState([emptyItem()])
+  const [products, setProducts] = useState([emptyProduct()])
   const [saving, setSaving] = useState(false)
   const [errors, setErrors] = useState({})
 
@@ -40,22 +36,23 @@ export default function OrderModal({ isOpen, onClose, onSave, editOrder, initial
           brand_name: editOrder.brand_name,
           status: editOrder.status,
           order_date: editOrder.order_date,
+          shipping_fee: editOrder.shipping_fee || '',
         })
-        setItems(
-          editOrder.purchase_items && editOrder.purchase_items.length > 0
-            ? editOrder.purchase_items.map(it => ({
-                id: it.id,
-                item_name: it.item_name,
-                photo_url: it.photo_url || '',
-                quantity: it.quantity,
-                unit_price: it.unit_price,
-                currency: it.currency,
-              }))
-            : [emptyItem()]
-        )
+        if (editOrder.purchase_items && editOrder.purchase_items.length > 0) {
+          const grouped = {}
+          editOrder.purchase_items.forEach(it => {
+            if (!grouped[it.item_name]) {
+              grouped[it.item_name] = { item_name: it.item_name, photo_url: it.photo_url || '', variants: [] }
+            }
+            grouped[it.item_name].variants.push({ color: it.color || '', quantity: it.quantity, unit_price: it.unit_price })
+          })
+          setProducts(Object.values(grouped))
+        } else {
+          setProducts([emptyProduct()])
+        }
       } else {
         setOrderData(emptyOrder(initialData))
-        setItems([emptyItem()])
+        setProducts([emptyProduct()])
       }
       setStep(1)
       setErrors({})
@@ -72,9 +69,8 @@ export default function OrderModal({ isOpen, onClose, onSave, editOrder, initial
 
   const validateStep2 = () => {
     const errs = {}
-    items.forEach((item, i) => {
-      if (!item.item_name.trim()) errs[`item_name_${i}`] = '請輸入商品名稱'
-      if (!item.unit_price && item.unit_price !== 0) errs[`unit_price_${i}`] = '請輸入單價'
+    products.forEach((p, i) => {
+      if (!p.item_name.trim()) errs[`item_name_${i}`] = '請輸入商品名稱'
     })
     setErrors(errs)
     return Object.keys(errs).length === 0
@@ -84,34 +80,39 @@ export default function OrderModal({ isOpen, onClose, onSave, editOrder, initial
     if (validateStep1()) setStep(2)
   }
 
-  const COUNTRY_CURRENCY = { '台灣': 'TWD', '韓國': 'KRW', '日本': 'JPY' }
-
   const handleCountryChange = (country) => {
-    const currency = COUNTRY_CURRENCY[country] || 'TWD'
     setOrderData(prev => ({ ...prev, country }))
-    setItems(prev => prev.map(it => ({ ...it, currency })))
   }
 
-  const handleItemChange = (index, field, value) => {
-    setItems(prev => prev.map((it, i) => i === index ? { ...it, [field]: value } : it))
-    const errKey = `${field}_${index}`
+  const handleProductChange = (productIndex, field, value) => {
+    setProducts(prev => prev.map((p, i) => i === productIndex ? { ...p, [field]: value } : p))
+    const errKey = `${field}_${productIndex}`
     if (errors[errKey]) setErrors(prev => { const n = { ...prev }; delete n[errKey]; return n })
   }
 
-  const handleAddItem = () => {
-    setItems(prev => [...prev, emptyItem()])
+  const handleAddProduct = () => {
+    setProducts(prev => [...prev, emptyProduct()])
   }
 
-  const handleRemoveItem = (index) => {
-    if (items.length === 1) return
-    setItems(prev => prev.filter((_, i) => i !== index))
+  const handleRemoveProduct = (index) => {
+    if (products.length === 1) return
+    setProducts(prev => prev.filter((_, i) => i !== index))
   }
 
   const handleSave = async () => {
     if (!validateStep2()) return
     setSaving(true)
     try {
-      await onSave(orderData, items)
+      const flatItems = products.flatMap(p =>
+        p.variants.map(v => ({
+          item_name: p.item_name,
+          color: v.color || null,
+          photo_url: p.photo_url || null,
+          quantity: parseInt(v.quantity) || 1,
+          unit_price: parseFloat(v.unit_price) || 0,
+        }))
+      )
+      await onSave(orderData, flatItems)
       onClose()
     } catch (err) {
       setErrors({ submit: err.message })
@@ -204,6 +205,19 @@ export default function OrderModal({ isOpen, onClose, onSave, editOrder, initial
                 {errors.brand_name && <p className="text-xs text-red-500 mt-1">{errors.brand_name}</p>}
               </div>
 
+              {/* Shipping fee */}
+              <div>
+                <label className="label">運費（選填）</label>
+                <input
+                  type="number"
+                  min="0"
+                  placeholder="整筆訂單運費"
+                  value={orderData.shipping_fee}
+                  onChange={e => setOrderData(prev => ({ ...prev, shipping_fee: e.target.value }))}
+                  className="input-field"
+                />
+              </div>
+
               {/* Order date */}
               <div>
                 <label className="label">訂購日期 *</label>
@@ -244,20 +258,21 @@ export default function OrderModal({ isOpen, onClose, onSave, editOrder, initial
 
           {step === 2 && (
             <>
-              {items.map((item, i) => (
+              {products.map((product, i) => (
                 <ItemForm
                   key={i}
-                  item={item}
-                  index={i}
+                  product={product}
+                  productIndex={i}
                   country={orderData.country}
-                  onChange={handleItemChange}
-                  onRemove={items.length > 1 ? handleRemoveItem : null}
+                  onChange={handleProductChange}
+                  onRemove={handleRemoveProduct}
+                  canRemove={products.length > 1}
                 />
               ))}
 
               <button
                 type="button"
-                onClick={handleAddItem}
+                onClick={handleAddProduct}
                 className="w-full py-2.5 border-2 border-dashed border-gray-300 rounded-lg text-sm text-gray-500 hover:border-indigo-400 hover:text-indigo-600 transition-colors duration-150 font-medium"
               >
                 + 新增商品
