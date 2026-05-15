@@ -107,6 +107,8 @@ export default function OrderModal({ isOpen, onClose, onSave, editOrder, initial
     if (!validateStep2()) return
     setSaving(true)
     try {
+      const currencyMap = { '台灣': 'TWD', '韓國': 'KRW', '日本': 'JPY' }
+      const currency = currencyMap[orderData.country] || 'TWD'
       const flatItems = products.flatMap(p =>
         p.variants.map(v => ({
           item_name: p.item_name,
@@ -114,6 +116,7 @@ export default function OrderModal({ isOpen, onClose, onSave, editOrder, initial
           photo_url: p.photo_url || null,
           quantity: parseInt(v.quantity) || 1,
           unit_price: parseFloat(v.unit_price) || 0,
+          currency,
         }))
       )
       await onSave(orderData, flatItems)
