@@ -51,7 +51,7 @@ function KoreanCalculator({ onSave }) {
       <div className="card p-5">
         <div>
           <p className="text-sm text-gray-500 mb-1">估算成本</p>
-          <p className="text-3xl font-bold text-gray-900">
+          <p className="text-3xl font-bold text-charcoal">
             {hasInput ? `NT$ ${formatNumber(cost)}` : '—'}
           </p>
         </div>
@@ -65,7 +65,7 @@ function KoreanCalculator({ onSave }) {
           detail: `KRW ${Number(krwAmount || 0).toLocaleString()}／${weightKg || 0} kg`,
         })}
         disabled={!hasInput}
-        className="w-full py-2 rounded-lg text-sm font-medium border-2 border-dashed border-green-300 text-green-500 hover:bg-green-50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+        className="w-full py-2 rounded-lg text-sm font-medium border-2 border-dashed border-brand-light text-brand hover:bg-brand-light disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
       >
         + 儲存
       </button>
@@ -110,7 +110,7 @@ function JapaneseCalculator({ onSave }) {
       <label className="flex items-center gap-3 cursor-pointer select-none w-fit">
         <div className="relative">
           <input type="checkbox" className="sr-only" checked={hasProxyFee} onChange={e => setHasProxyFee(e.target.checked)} />
-          <div className={`w-10 h-6 rounded-full transition-colors duration-200 ${hasProxyFee ? 'bg-green-500' : 'bg-gray-300'}`} />
+          <div className={`w-10 h-6 rounded-full transition-colors duration-200 ${hasProxyFee ? 'bg-brand' : 'bg-gray-300'}`} />
           <div className={`absolute top-1 left-1 w-4 h-4 bg-white rounded-full shadow transition-transform duration-200 ${hasProxyFee ? 'translate-x-4' : ''}`} />
         </div>
         <span className="text-sm font-medium text-gray-700">含代購手續費（×1.08）</span>
@@ -136,7 +136,7 @@ function JapaneseCalculator({ onSave }) {
       <div className="card p-5">
         <div>
           <p className="text-sm text-gray-500 mb-1">估算成本</p>
-          <p className="text-3xl font-bold text-gray-900">
+          <p className="text-3xl font-bold text-charcoal">
             {hasInput ? `NT$ ${formatNumber(cost)}` : '—'}
           </p>
         </div>
@@ -150,7 +150,7 @@ function JapaneseCalculator({ onSave }) {
           detail: `JPY ${Number(jpyAmount || 0).toLocaleString()}${hasProxyFee ? '（含代購費）' : ''}／${weightKg || 0} kg`,
         })}
         disabled={!hasInput}
-        className="w-full py-2 rounded-lg text-sm font-medium border-2 border-dashed border-green-300 text-green-500 hover:bg-green-50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+        className="w-full py-2 rounded-lg text-sm font-medium border-2 border-dashed border-brand-light text-brand hover:bg-brand-light disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
       >
         + 儲存
       </button>
@@ -208,7 +208,7 @@ function ComparisonList({ items, onRemove, onUpdate, onOrder }) {
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 flex-wrap mb-0.5">
                     <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${
-                      item.country === '韓國' ? 'bg-blue-50 text-blue-400' : 'bg-green-50 text-green-600'
+                      item.country === '韓國' ? 'bg-secondary-light text-secondary-dark' : 'bg-brand-light text-brand-dark'
                     }`}>
                       {item.country}
                     </span>
@@ -221,7 +221,7 @@ function ComparisonList({ items, onRemove, onUpdate, onOrder }) {
                   <div className="flex flex-wrap items-end gap-3 mt-1">
                     <div>
                       <p className="text-xs text-gray-400">估算成本</p>
-                      <p className="text-sm font-bold text-gray-800">NT$ {formatNumber(item.cost)}</p>
+                      <p className="text-sm font-bold text-charcoal">NT$ {formatNumber(item.cost)}</p>
                     </div>
                     <div>
                       <p className="text-xs text-gray-400">建議售價</p>
@@ -235,11 +235,11 @@ function ComparisonList({ items, onRemove, onUpdate, onOrder }) {
                             value={editingPrice}
                             onChange={e => setEditingPrice(e.target.value)}
                             onKeyDown={e => e.key === 'Enter' && handlePriceSave(item.id)}
-                            className="w-24 text-sm border border-green-400 rounded-lg px-2 py-1 focus:outline-none focus:ring-2 focus:ring-green-400"
+                            className="w-24 text-sm border border-brand rounded-lg px-2 py-1 focus:outline-none focus:ring-2 focus:ring-brand"
                           />
                           <button
                             onClick={() => handlePriceSave(item.id)}
-                            className="text-xs px-2 py-1 rounded-lg bg-green-500 text-white font-medium hover:bg-green-500"
+                            className="text-xs px-2 py-1 rounded-lg bg-brand text-white font-medium hover:bg-brand"
                           >
                             儲存
                           </button>
@@ -247,7 +247,7 @@ function ComparisonList({ items, onRemove, onUpdate, onOrder }) {
                       ) : (
                         <button
                           onClick={() => handlePriceEdit(item)}
-                          className="text-sm font-bold text-green-500 hover:underline"
+                          className="text-sm font-bold text-brand hover:underline"
                         >
                           {hasPrice ? `NT$ ${formatNumber(selling)}` : '點擊輸入'}
                         </button>
@@ -256,7 +256,7 @@ function ComparisonList({ items, onRemove, onUpdate, onOrder }) {
                     {hasPrice && !isEditing && (
                       <div>
                         <p className="text-xs text-gray-400">利潤（扣稅5%）</p>
-                        <p className={`text-sm font-bold ${profit >= 0 ? 'text-green-500' : 'text-red-500'}`}>
+                        <p className={`text-sm font-bold ${profit >= 0 ? 'text-brand' : 'text-red-500'}`}>
                           {profit >= 0 ? '+' : ''}NT$ {formatNumber(profit)}
                         </p>
                       </div>
@@ -267,7 +267,7 @@ function ComparisonList({ items, onRemove, onUpdate, onOrder }) {
                 <div className="flex flex-col items-end gap-2 flex-shrink-0">
                   <button
                     onClick={() => onOrder(item)}
-                    className="text-xs px-3 py-1.5 rounded-lg bg-green-500 text-white font-medium hover:bg-green-500 transition-colors"
+                    className="text-xs px-3 py-1.5 rounded-lg bg-brand text-white font-medium hover:bg-brand transition-colors"
                   >
                     訂購
                   </button>
@@ -395,7 +395,7 @@ export default function CostCalculator({ onOrder, savedItems, onAddItem, onRemov
               <button
                 type="button"
                 onClick={() => fileInputRef.current?.click()}
-                className="w-full py-3 border-2 border-dashed border-gray-300 rounded-lg text-sm text-gray-400 hover:border-green-400 hover:text-green-500 transition-colors flex items-center justify-center gap-2"
+                className="w-full py-3 border-2 border-dashed border-gray-300 rounded-lg text-sm text-gray-400 hover:border-brand hover:text-brand transition-colors flex items-center justify-center gap-2"
               >
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -419,7 +419,7 @@ export default function CostCalculator({ onOrder, savedItems, onAddItem, onRemov
             onClick={() => setActiveTab('korea')}
             className={`flex-1 py-3 px-4 text-sm font-medium transition-colors duration-150 ${
               activeTab === 'korea'
-                ? 'bg-blue-50 text-blue-500 border-b-2 border-blue-400'
+                ? 'bg-secondary-light text-secondary-dark border-b-2 border-secondary-dark'
                 : 'text-gray-500 hover:text-gray-700 hover:bg-gray-50'
             }`}
           >
@@ -429,7 +429,7 @@ export default function CostCalculator({ onOrder, savedItems, onAddItem, onRemov
             onClick={() => setActiveTab('japan')}
             className={`flex-1 py-3 px-4 text-sm font-medium transition-colors duration-150 ${
               activeTab === 'japan'
-                ? 'bg-green-50 text-green-600 border-b-2 border-green-500'
+                ? 'bg-brand-light text-brand-dark border-b-2 border-brand'
                 : 'text-gray-500 hover:text-gray-700 hover:bg-gray-50'
             }`}
           >

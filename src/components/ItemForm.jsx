@@ -152,7 +152,7 @@ export default function ItemForm({ product, productIndex, country, hasProxyFee, 
                 <button type="button" onClick={() => onChange(productIndex, 'photo_url', '')} className="absolute -top-1 -right-1 bg-red-500 text-white rounded-full w-4 h-4 flex items-center justify-center text-xs hover:bg-red-600">×</button>
               </div>
             ) : (
-              <label className={`w-12 h-12 flex items-center justify-center border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-green-400 transition-colors ${uploading ? 'opacity-50' : ''}`}>
+              <label className={`w-12 h-12 flex items-center justify-center border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-brand transition-colors ${uploading ? 'opacity-50' : ''}`}>
                 <svg className="w-5 h-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
                 </svg>
@@ -190,7 +190,7 @@ export default function ItemForm({ product, productIndex, country, hasProxyFee, 
           <button
             type="button"
             onClick={handleAddVariant}
-            className="w-full py-1.5 mt-1 text-xs text-green-500 hover:text-green-500 font-medium hover:bg-green-50 rounded transition-colors"
+            className="w-full py-1.5 mt-1 text-xs text-brand hover:text-brand font-medium hover:bg-brand-light rounded transition-colors"
           >
             + 新增規格
           </button>
@@ -200,7 +200,7 @@ export default function ItemForm({ product, productIndex, country, hasProxyFee, 
         {productTotal > 0 && (
           <div className="flex justify-end text-sm">
             <span className="text-gray-500 mr-2">商品小計</span>
-            <span className="font-bold text-gray-800">{formatNumber(productTotal)} {currency}</span>
+            <span className="font-bold text-charcoal">{formatNumber(productTotal)} {currency}</span>
           </div>
         )}
       </div>

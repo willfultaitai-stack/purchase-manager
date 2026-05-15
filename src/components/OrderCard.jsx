@@ -8,8 +8,8 @@ function formatNumber(num) {
 function CountryBadge({ country }) {
   const styles = {
     '台灣': 'bg-yellow-50 text-yellow-600',
-    '韓國': 'bg-blue-50 text-blue-400',
-    '日本': 'bg-green-50 text-green-600',
+    '韓國': 'bg-secondary-light text-secondary-dark',
+    '日本': 'bg-brand-light text-brand-dark',
   }
   return (
     <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold ${styles[country] || 'bg-gray-100 text-gray-600'}`}>
@@ -20,9 +20,9 @@ function CountryBadge({ country }) {
 
 function StatusBadge({ status }) {
   const styles = {
-    '待訂貨': 'bg-blue-50 text-blue-400',
+    '待訂貨': 'bg-secondary-light text-secondary-dark',
     '已訂購': 'bg-yellow-50 text-yellow-600',
-    '已出貨': 'bg-green-50 text-green-500',
+    '已出貨': 'bg-brand-light text-brand',
   }
   return (
     <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold ${styles[status] || 'bg-gray-100 text-gray-600'}`}>
@@ -97,7 +97,7 @@ export default function OrderCard({ order, onEdit, onDelete, onStatusToggle, onI
               <CountryBadge country={order.country} />
               <StatusBadge status={order.status} />
             </div>
-            <h3 className="font-semibold text-gray-900 text-base truncate">{order.brand_name}</h3>
+            <h3 className="font-semibold text-charcoal text-base truncate">{order.brand_name}</h3>
             <p className="text-xs text-gray-500 mt-0.5">
               訂購日期：{order.order_date} &nbsp;·&nbsp; {itemCount} 件商品
             </p>
@@ -111,8 +111,8 @@ export default function OrderCard({ order, onEdit, onDelete, onStatusToggle, onI
                 disabled={toggling}
                 className={`text-xs px-2 py-1 rounded-lg border font-medium transition-colors duration-150 ${
                   order.status === '待訂貨'
-                    ? 'border-blue-200 text-blue-400 hover:bg-blue-50'
-                    : 'border-green-200 text-green-500 hover:bg-green-50'
+                    ? 'border-secondary-light text-secondary-dark hover:bg-secondary-light'
+                    : 'border-brand-light text-brand hover:bg-brand-light'
                 } disabled:opacity-50`}
               >
                 {toggling ? '...' : nextLabel[order.status]}
@@ -122,7 +122,7 @@ export default function OrderCard({ order, onEdit, onDelete, onStatusToggle, onI
             {/* Edit */}
             <button
               onClick={e => { e.stopPropagation(); onEdit(order) }}
-              className="text-gray-400 hover:text-green-500 transition-colors"
+              className="text-gray-400 hover:text-brand transition-colors"
               title="編輯訂單"
             >
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -180,13 +180,13 @@ export default function OrderCard({ order, onEdit, onDelete, onStatusToggle, onI
                         <td className="px-4 py-2">
                           <PhotoThumbnail url={item.photo_url} name={item.item_name} />
                         </td>
-                        <td className="px-3 py-2 font-medium text-gray-800">{item.item_name}</td>
+                        <td className="px-3 py-2 font-medium text-charcoal">{item.item_name}</td>
                         <td className="px-3 py-2 text-gray-500">{item.color || '—'}</td>
                         <td className="px-3 py-2 text-right text-gray-700">{item.quantity}</td>
                         <td className="px-3 py-2 text-right text-gray-700">
                           {formatNumber(item.unit_price)} {item.currency}
                         </td>
-                        <td className="px-3 py-2 text-right font-semibold text-gray-800">
+                        <td className="px-3 py-2 text-right font-semibold text-charcoal">
                           {formatNumber(total)} {item.currency}
                         </td>
                         <td className="px-4 py-2 text-center">
@@ -195,8 +195,8 @@ export default function OrderCard({ order, onEdit, onDelete, onStatusToggle, onI
                             disabled={togglingItem === item.id}
                             className={`w-6 h-6 rounded border-2 flex items-center justify-center mx-auto transition-colors ${
                               shipped
-                                ? 'bg-green-500 border-green-500 text-white'
-                                : 'border-gray-300 hover:border-green-400 text-transparent'
+                                ? 'bg-brand border-brand text-white'
+                                : 'border-gray-300 hover:border-brand text-transparent'
                             } disabled:opacity-50`}
                             title={shipped ? '標記為未出貨' : '標記為已出貨'}
                           >
@@ -240,7 +240,7 @@ export default function OrderCard({ order, onEdit, onDelete, onStatusToggle, onI
                         )}
                         <tr className="border-t-2 border-gray-200 bg-gray-50">
                           <td colSpan={6} className="px-4 py-2.5 text-right text-xs font-semibold text-gray-600">合計</td>
-                          <td className="px-4 py-2.5 text-right text-base font-bold text-green-500">
+                          <td className="px-4 py-2.5 text-right text-base font-bold text-brand">
                             {formatNumber(grandTotal)} {currency}
                           </td>
                         </tr>

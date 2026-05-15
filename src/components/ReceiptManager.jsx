@@ -5,14 +5,14 @@ const STATUS_FILTERS = ['全部', '待訂貨', '已訂購', '已出貨']
 
 const COUNTRY_COLOR = {
   '台灣': 'text-yellow-600',
-  '韓國': 'text-blue-400',
-  '日本': 'text-green-600',
+  '韓國': 'text-secondary-dark',
+  '日本': 'text-brand-dark',
 }
 
 const STATUS_STYLE = {
-  '待訂貨': 'bg-blue-50 text-blue-400',
+  '待訂貨': 'bg-secondary-light text-secondary-dark',
   '已訂購': 'bg-yellow-50 text-yellow-600',
-  '已出貨': 'bg-green-50 text-green-500',
+  '已出貨': 'bg-brand-light text-brand',
 }
 
 const BATCH_LABEL = ['第1批', '第2批', '第3批', '第4批', '第5批']
@@ -96,7 +96,7 @@ export default function ReceiptManager() {
               key={s}
               onClick={() => setFilterStatus(s)}
               className={`px-3 py-1.5 text-xs font-medium transition-colors duration-150 ${
-                filterStatus === s ? 'bg-green-500 text-white' : 'text-gray-600 hover:bg-gray-50'
+                filterStatus === s ? 'bg-brand text-white' : 'text-gray-600 hover:bg-gray-50'
               }`}
             >
               {s}
@@ -105,7 +105,7 @@ export default function ReceiptManager() {
         </div>
         <button
           onClick={fetchData}
-          className="ml-auto text-xs text-gray-500 hover:text-green-500 px-2.5 py-1.5 rounded-lg border border-gray-200 bg-white shadow-sm transition-colors"
+          className="ml-auto text-xs text-gray-500 hover:text-brand px-2.5 py-1.5 rounded-lg border border-gray-200 bg-white shadow-sm transition-colors"
         >
           重新整理
         </button>
@@ -153,7 +153,7 @@ export default function ReceiptManager() {
                   <span className={`text-sm font-bold ${COUNTRY_COLOR[order.country] || 'text-gray-600'}`}>
                     {order.country}
                   </span>
-                  <span className="font-semibold text-gray-900">{order.brand_name}</span>
+                  <span className="font-semibold text-charcoal">{order.brand_name}</span>
                   <span className="text-xs text-gray-400">{order.order_date}</span>
                   <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${STATUS_STYLE[order.status] || 'bg-gray-100 text-gray-500'}`}>
                     {order.status}
@@ -161,7 +161,7 @@ export default function ReceiptManager() {
                 </div>
                 <div className="flex items-center gap-3 flex-shrink-0">
                   <span className="text-xs text-gray-500">
-                    共收 <span className="font-bold text-gray-800">{totalReceived}</span>
+                    共收 <span className="font-bold text-charcoal">{totalReceived}</span>
                     <span className="text-gray-400"> / {totalOrdered} 件</span>
                   </span>
                   <svg
@@ -221,7 +221,7 @@ export default function ReceiptManager() {
                                 </td>
 
                                 {/* Name */}
-                                <td className="px-3 py-2.5 font-medium text-gray-800 whitespace-nowrap">
+                                <td className="px-3 py-2.5 font-medium text-charcoal whitespace-nowrap">
                                   {item.item_name}
                                 </td>
 
@@ -236,14 +236,14 @@ export default function ReceiptManager() {
                                 </td>
 
                                 {/* Received */}
-                                <td className="px-3 py-2.5 text-center font-semibold text-gray-800">
+                                <td className="px-3 py-2.5 text-center font-semibold text-charcoal">
                                   {totalRecv}
                                 </td>
 
                                 {/* Remaining */}
                                 <td className="px-3 py-2.5 text-center font-semibold">
                                   {complete
-                                    ? <span className="text-green-500 text-xs">✓ 全到</span>
+                                    ? <span className="text-brand text-xs">✓ 全到</span>
                                     : <span className="text-red-400">{remaining}</span>
                                   }
                                 </td>
@@ -285,13 +285,13 @@ export default function ReceiptManager() {
                                           onChange={e => setNewBatch(p => ({ ...p, [item.id]: e.target.value }))}
                                           onKeyDown={e => e.key === 'Enter' && handleAddBatch(item)}
                                           placeholder="數量"
-                                          className="w-16 text-xs border border-gray-300 rounded px-2 py-0.5 focus:outline-none focus:ring-1 focus:ring-green-400 text-center"
+                                          className="w-16 text-xs border border-gray-300 rounded px-2 py-0.5 focus:outline-none focus:ring-1 focus:ring-brand text-center"
                                         />
                                         {newBatch[item.id] && (
                                           <button
                                             onClick={() => handleAddBatch(item)}
                                             disabled={saving === item.id}
-                                            className="text-xs text-white bg-green-500 hover:bg-green-500 px-2 py-0.5 rounded font-medium disabled:opacity-50 transition-colors"
+                                            className="text-xs text-white bg-brand hover:bg-brand px-2 py-0.5 rounded font-medium disabled:opacity-50 transition-colors"
                                           >
                                             {saving === item.id ? '…' : '儲存'}
                                           </button>

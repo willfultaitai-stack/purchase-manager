@@ -196,7 +196,7 @@ export default function PurchaseManager({ prefilledOrder, onPrefilledConsumed })
                 key={c}
                 onClick={() => setFilterCountry(c)}
                 className={`px-3 py-1.5 text-xs font-medium transition-colors duration-150 ${
-                  filterCountry === c ? 'bg-green-500 text-white' : 'text-gray-600 hover:bg-gray-50'
+                  filterCountry === c ? 'bg-brand text-white' : 'text-gray-600 hover:bg-gray-50'
                 }`}
               >
                 {c}
@@ -211,7 +211,7 @@ export default function PurchaseManager({ prefilledOrder, onPrefilledConsumed })
                 key={s}
                 onClick={() => setFilterStatus(s)}
                 className={`px-3 py-1.5 text-xs font-medium transition-colors duration-150 ${
-                  filterStatus === s ? 'bg-green-500 text-white' : 'text-gray-600 hover:bg-gray-50'
+                  filterStatus === s ? 'bg-brand text-white' : 'text-gray-600 hover:bg-gray-50'
                 }`}
               >
                 {s}
@@ -223,7 +223,7 @@ export default function PurchaseManager({ prefilledOrder, onPrefilledConsumed })
           <select
             value={filterMonth}
             onChange={e => setFilterMonth(e.target.value)}
-            className="px-3 py-1.5 text-xs font-medium rounded-lg border border-gray-200 bg-white shadow-sm text-gray-600 focus:outline-none focus:ring-2 focus:ring-green-400"
+            className="px-3 py-1.5 text-xs font-medium rounded-lg border border-gray-200 bg-white shadow-sm text-gray-600 focus:outline-none focus:ring-2 focus:ring-brand"
           >
             <option value="全部">全部月份</option>
             {availableMonths.map(m => (
@@ -295,7 +295,7 @@ export default function PurchaseManager({ prefilledOrder, onPrefilledConsumed })
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={() => setDeleteConfirm(null)} />
           <div className="relative bg-white rounded-xl shadow-xl p-6 max-w-sm w-full">
-            <h3 className="text-base font-semibold text-gray-900 mb-2">確認刪除</h3>
+            <h3 className="text-base font-semibold text-charcoal mb-2">確認刪除</h3>
             <p className="text-sm text-gray-600 mb-5">刪除後無法復原，此訂單及其所有商品明細將被永久刪除。</p>
             <div className="flex gap-3 justify-end">
               <button onClick={() => setDeleteConfirm(null)} className="btn-secondary text-sm py-1.5 px-3">取消</button>

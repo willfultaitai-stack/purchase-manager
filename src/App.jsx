@@ -75,11 +75,11 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-cream">
       <header className="bg-white border-b border-gray-200 sticky top-0 z-40">
         <div className="max-w-5xl mx-auto px-5">
           <div className="flex items-center h-14 gap-8">
-            <span className="text-base font-bold text-gray-900 tracking-tight whitespace-nowrap">
+            <span className="text-base font-bold text-charcoal tracking-tight whitespace-nowrap">
               採購管理系統
             </span>
             <nav className="flex items-center h-full gap-1">
@@ -89,20 +89,21 @@ export default function App() {
                   onClick={() => setActiveTab(tab.id)}
                   className={`relative flex items-center gap-1.5 px-3 h-full text-sm font-medium transition-colors duration-150 ${
                     activeTab === tab.id
-                      ? 'text-green-500'
-                      : 'text-gray-500 hover:text-gray-800'
+                      ? 'text-brand'
+                      : 'text-gray-500 hover:text-charcoal'
                   }`}
                 >
                   {tab.icon}
                   <span>{tab.label}</span>
                   {activeTab === tab.id && (
-                    <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-green-500 rounded-t" />
+                    <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-brand rounded-t" />
                   )}
                 </button>
               ))}
             </nav>
           </div>
         </div>
+        <div className="border-t border-gray-100 bg-cream/60"><div className="max-w-5xl mx-auto px-5 h-7 flex items-center"><span className="text-xs text-warm-gray">採購管理系統</span></div></div>
       </header>
 
       <main className="max-w-5xl mx-auto px-5 py-6">
