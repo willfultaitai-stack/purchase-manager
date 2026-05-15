@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react'
 import CostCalculator from './components/CostCalculator'
 import PurchaseManager from './components/PurchaseManager'
+import ReceiptManager from './components/ReceiptManager'
 
 const TABS = [
   { id: 'calculator', label: '成本計算機', icon: '🧮' },
   { id: 'purchases', label: '採購管理', icon: '📦' },
+  { id: 'receipts', label: '點貨管理', icon: '✅' },
 ]
 
 function loadSavedItems() {
@@ -90,6 +92,7 @@ export default function App() {
             onPrefilledConsumed={() => setPrefilledOrder(null)}
           />
         )}
+        {activeTab === 'receipts' && <ReceiptManager />}
       </main>
     </div>
   )
