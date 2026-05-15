@@ -7,9 +7,9 @@ function formatNumber(num) {
 
 function CountryBadge({ country }) {
   const styles = {
-    '台灣': 'bg-blue-100 text-blue-700',
-    '韓國': 'bg-pink-100 text-pink-700',
-    '日本': 'bg-red-100 text-red-700',
+    '台灣': 'bg-blue-50 text-blue-600',
+    '韓國': 'bg-green-50 text-green-700',
+    '日本': 'bg-amber-50 text-amber-600',
   }
   return (
     <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold ${styles[country] || 'bg-gray-100 text-gray-600'}`}>
@@ -20,9 +20,9 @@ function CountryBadge({ country }) {
 
 function StatusBadge({ status }) {
   const styles = {
-    '待訂貨': 'bg-gray-100 text-gray-600',
-    '已訂購': 'bg-amber-100 text-amber-700',
-    '已出貨': 'bg-green-100 text-green-700',
+    '待訂貨': 'bg-blue-50 text-blue-600',
+    '已訂購': 'bg-amber-50 text-amber-600',
+    '已出貨': 'bg-green-50 text-green-700',
   }
   return (
     <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold ${styles[status] || 'bg-gray-100 text-gray-600'}`}>
@@ -100,8 +100,8 @@ export default function OrderCard({ order, onEdit, onDelete, onStatusToggle }) {
                 disabled={toggling}
                 className={`text-xs px-2 py-1 rounded-lg border font-medium transition-colors duration-150 ${
                   order.status === '待訂貨'
-                    ? 'border-amber-300 text-amber-700 hover:bg-amber-50'
-                    : 'border-green-300 text-green-700 hover:bg-green-50'
+                    ? 'border-blue-200 text-blue-600 hover:bg-blue-50'
+                    : 'border-green-200 text-green-700 hover:bg-green-50'
                 } disabled:opacity-50`}
               >
                 {toggling ? '...' : nextLabel[order.status]}

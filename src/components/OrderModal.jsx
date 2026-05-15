@@ -5,8 +5,8 @@ const COUNTRIES = ['台灣', '韓國', '日本']
 const STATUSES = ['待訂貨', '已訂購', '已出貨']
 
 const STATUS_STYLES = {
-  '待訂貨': 'bg-gray-500 text-white border-gray-500',
-  '已訂購': 'bg-amber-500 text-white border-amber-500',
+  '待訂貨': 'bg-blue-500 text-white border-blue-500',
+  '已訂購': 'bg-amber-400 text-white border-amber-400',
   '已出貨': 'bg-green-600 text-white border-green-600',
 }
 
@@ -189,9 +189,9 @@ export default function OrderModal({ isOpen, onClose, onSave, editOrder, initial
                       onClick={() => handleCountryChange(c)}
                       className={`flex-1 py-2 px-3 rounded-lg text-sm font-medium border transition-colors duration-150 ${
                         orderData.country === c
-                          ? c === '台灣' ? 'bg-blue-600 text-white border-blue-600'
-                          : c === '韓國' ? 'bg-pink-600 text-white border-pink-600'
-                          : 'bg-red-600 text-white border-red-600'
+                          ? c === '台灣' ? 'bg-blue-500 text-white border-blue-500'
+                          : c === '韓國' ? 'bg-green-600 text-white border-green-600'
+                          : 'bg-amber-500 text-white border-amber-500'
                           : 'bg-white text-gray-600 border-gray-300 hover:bg-gray-50'
                       }`}
                     >

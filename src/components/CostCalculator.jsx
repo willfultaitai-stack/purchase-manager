@@ -37,11 +37,11 @@ function KoreanCalculator({ onSave }) {
         </div>
       </div>
 
-      <div className="bg-pink-50 border border-pink-100 rounded-lg p-4 text-sm text-pink-700 space-y-1">
-        <p className="font-semibold text-pink-800 mb-2">計算公式</p>
+      <div className="bg-gray-50 border border-gray-200 rounded-lg p-4 text-sm text-gray-600 space-y-1">
+        <p className="font-semibold text-gray-700 mb-2">計算公式</p>
         <p>成本 (TWD) = KRW ÷ 40 + 165 × 重量(kg)</p>
         {hasInput && (
-          <p className="text-pink-600 mt-1">
+          <p className="text-gray-500 mt-1">
             = {krwAmount || 0} ÷ 40 + 165 × {weightKg || 0}
             <br />= {formatNumber(krw / 40)} + {formatNumber(165 * weight)}
           </p>
@@ -65,7 +65,7 @@ function KoreanCalculator({ onSave }) {
           detail: `KRW ${Number(krwAmount || 0).toLocaleString()}／${weightKg || 0} kg`,
         })}
         disabled={!hasInput}
-        className="w-full py-2 rounded-lg text-sm font-medium border-2 border-dashed border-pink-300 text-pink-600 hover:bg-pink-50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+        className="w-full py-2 rounded-lg text-sm font-medium border-2 border-dashed border-green-300 text-green-600 hover:bg-green-50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
       >
         + 儲存
       </button>
@@ -116,14 +116,14 @@ function JapaneseCalculator({ onSave }) {
         <span className="text-sm font-medium text-gray-700">含代購手續費（×1.08）</span>
       </label>
 
-      <div className="bg-red-50 border border-red-100 rounded-lg p-4 text-sm text-red-700 space-y-1">
-        <p className="font-semibold text-red-800 mb-2">計算公式</p>
+      <div className="bg-gray-50 border border-gray-200 rounded-lg p-4 text-sm text-gray-600 space-y-1">
+        <p className="font-semibold text-gray-700 mb-2">計算公式</p>
         {hasProxyFee
           ? <p>成本 (TWD) = JPY × 1.08 × 1.1 × 0.22 + 180 × 重量(kg)</p>
           : <p>成本 (TWD) = JPY × 1.1 × 0.22 + 180 × 重量(kg)</p>
         }
         {hasInput && (
-          <p className="text-red-600 mt-1">
+          <p className="text-gray-500 mt-1">
             {hasProxyFee
               ? `= ${jpy} × 1.08 × 1.1 × 0.22 + 180 × ${weight}`
               : `= ${jpy} × 1.1 × 0.22 + 180 × ${weight}`}
@@ -150,7 +150,7 @@ function JapaneseCalculator({ onSave }) {
           detail: `JPY ${Number(jpyAmount || 0).toLocaleString()}${hasProxyFee ? '（含代購費）' : ''}／${weightKg || 0} kg`,
         })}
         disabled={!hasInput}
-        className="w-full py-2 rounded-lg text-sm font-medium border-2 border-dashed border-red-300 text-red-600 hover:bg-red-50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+        className="w-full py-2 rounded-lg text-sm font-medium border-2 border-dashed border-green-300 text-green-600 hover:bg-green-50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
       >
         + 儲存
       </button>
@@ -208,7 +208,7 @@ function ComparisonList({ items, onRemove, onUpdate, onOrder }) {
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 flex-wrap mb-0.5">
                     <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${
-                      item.country === '韓國' ? 'bg-pink-100 text-pink-700' : 'bg-red-100 text-red-700'
+                      item.country === '韓國' ? 'bg-green-50 text-green-700' : 'bg-blue-50 text-blue-600'
                     }`}>
                       {item.country}
                     </span>
@@ -419,7 +419,7 @@ export default function CostCalculator({ onOrder, savedItems, onAddItem, onRemov
             onClick={() => setActiveTab('korea')}
             className={`flex-1 py-3 px-4 text-sm font-medium transition-colors duration-150 ${
               activeTab === 'korea'
-                ? 'bg-pink-50 text-pink-700 border-b-2 border-pink-500'
+                ? 'bg-green-50 text-green-700 border-b-2 border-green-500'
                 : 'text-gray-500 hover:text-gray-700 hover:bg-gray-50'
             }`}
           >
@@ -429,7 +429,7 @@ export default function CostCalculator({ onOrder, savedItems, onAddItem, onRemov
             onClick={() => setActiveTab('japan')}
             className={`flex-1 py-3 px-4 text-sm font-medium transition-colors duration-150 ${
               activeTab === 'japan'
-                ? 'bg-red-50 text-red-700 border-b-2 border-red-500'
+                ? 'bg-blue-50 text-blue-700 border-b-2 border-blue-500'
                 : 'text-gray-500 hover:text-gray-700 hover:bg-gray-50'
             }`}
           >

@@ -5,14 +5,14 @@ const STATUS_FILTERS = ['全部', '待訂貨', '已訂購', '已出貨']
 
 const COUNTRY_COLOR = {
   '台灣': 'text-blue-600',
-  '韓國': 'text-pink-600',
-  '日本': 'text-red-600',
+  '韓國': 'text-green-700',
+  '日本': 'text-amber-600',
 }
 
 const STATUS_STYLE = {
-  '待訂貨': 'bg-gray-100 text-gray-500',
-  '已訂購': 'bg-amber-100 text-amber-700',
-  '已出貨': 'bg-green-100 text-green-700',
+  '待訂貨': 'bg-blue-50 text-blue-600',
+  '已訂購': 'bg-amber-50 text-amber-600',
+  '已出貨': 'bg-green-50 text-green-700',
 }
 
 const BATCH_LABEL = ['第1批', '第2批', '第3批', '第4批', '第5批']
