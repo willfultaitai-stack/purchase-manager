@@ -7,9 +7,9 @@ function formatNumber(num) {
 
 function CountryBadge({ country }) {
   const styles = {
-    '台灣': 'bg-blue-50 text-blue-400',
-    '韓國': 'bg-green-50 text-green-500',
-    '日本': 'bg-yellow-50 text-yellow-600',
+    '台灣': 'bg-yellow-50 text-yellow-600',
+    '韓國': 'bg-blue-50 text-blue-400',
+    '日本': 'bg-green-50 text-green-600',
   }
   return (
     <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold ${styles[country] || 'bg-gray-100 text-gray-600'}`}>

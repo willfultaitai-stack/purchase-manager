@@ -208,7 +208,7 @@ function ComparisonList({ items, onRemove, onUpdate, onOrder }) {
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 flex-wrap mb-0.5">
                     <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${
-                      item.country === '韓國' ? 'bg-green-50 text-green-500' : 'bg-blue-50 text-blue-400'
+                      item.country === '韓國' ? 'bg-blue-50 text-blue-400' : 'bg-green-50 text-green-600'
                     }`}>
                       {item.country}
                     </span>
@@ -419,7 +419,7 @@ export default function CostCalculator({ onOrder, savedItems, onAddItem, onRemov
             onClick={() => setActiveTab('korea')}
             className={`flex-1 py-3 px-4 text-sm font-medium transition-colors duration-150 ${
               activeTab === 'korea'
-                ? 'bg-green-50 text-green-500 border-b-2 border-green-500'
+                ? 'bg-blue-50 text-blue-500 border-b-2 border-blue-400'
                 : 'text-gray-500 hover:text-gray-700 hover:bg-gray-50'
             }`}
           >
@@ -429,7 +429,7 @@ export default function CostCalculator({ onOrder, savedItems, onAddItem, onRemov
             onClick={() => setActiveTab('japan')}
             className={`flex-1 py-3 px-4 text-sm font-medium transition-colors duration-150 ${
               activeTab === 'japan'
-                ? 'bg-blue-50 text-blue-700 border-b-2 border-blue-400'
+                ? 'bg-green-50 text-green-600 border-b-2 border-green-500'
                 : 'text-gray-500 hover:text-gray-700 hover:bg-gray-50'
             }`}
           >

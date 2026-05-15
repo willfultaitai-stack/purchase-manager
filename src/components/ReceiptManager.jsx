@@ -4,9 +4,9 @@ import { supabase, isSupabaseConfigured } from '../lib/supabase'
 const STATUS_FILTERS = ['全部', '待訂貨', '已訂購', '已出貨']
 
 const COUNTRY_COLOR = {
-  '台灣': 'text-blue-400',
-  '韓國': 'text-green-500',
-  '日本': 'text-yellow-600',
+  '台灣': 'text-yellow-600',
+  '韓國': 'text-blue-400',
+  '日本': 'text-green-600',
 }
 
 const STATUS_STYLE = {

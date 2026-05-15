@@ -189,9 +189,9 @@ export default function OrderModal({ isOpen, onClose, onSave, editOrder, initial
                       onClick={() => handleCountryChange(c)}
                       className={`flex-1 py-2 px-3 rounded-lg text-sm font-medium border transition-colors duration-150 ${
                         orderData.country === c
-                          ? c === '台灣' ? 'bg-blue-400 text-white border-blue-400'
-                          : c === '韓國' ? 'bg-green-500 text-white border-green-500'
-                          : 'bg-yellow-500 text-white border-yellow-500'
+                          ? c === '台灣' ? 'bg-yellow-400 text-white border-yellow-400'
+                          : c === '韓國' ? 'bg-blue-400 text-white border-blue-400'
+                          : 'bg-green-500 text-white border-green-500'
                           : 'bg-white text-gray-600 border-gray-300 hover:bg-gray-50'
                       }`}
                     >
