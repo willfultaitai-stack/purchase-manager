@@ -8,8 +8,9 @@ function formatNumber(num) {
   return Number(num).toLocaleString('zh-TW')
 }
 
-function VariantRow({ variant, index, currency, onChange, onRemove, canRemove }) {
-  const total = (parseFloat(variant.quantity) || 0) * (parseFloat(variant.unit_price) || 0)
+function VariantRow({ variant, index, currency, multiplier, onChange, onRemove, canRemove }) {
+  const baseTotal = (parseFloat(variant.quantity) || 0) * (parseFloat(variant.unit_price) || 0)
+  const total = baseTotal * multiplier
 
   return (
     <div className="grid grid-cols-12 gap-2 items-center py-2 border-b border-gray-100 last:border-0">
@@ -68,10 +69,11 @@ function VariantRow({ variant, index, currency, onChange, onRemove, canRemove })
   )
 }
 
-export default function ItemForm({ product, productIndex, country, onChange, onRemove, canRemove }) {
+export default function ItemForm({ product, productIndex, country, hasProxyFee, hasTax, onChange, onRemove, canRemove }) {
   const [uploading, setUploading] = useState(false)
   const [uploadError, setUploadError] = useState('')
   const currency = COUNTRY_CURRENCY[country] || 'TWD'
+  const multiplier = (hasTax ? 1.10 : 1) * (hasProxyFee ? 1.08 : 1)
 
   const handlePhotoUpload = async (e) => {
     const file = e.target.files[0]
@@ -113,7 +115,7 @@ export default function ItemForm({ product, productIndex, country, onChange, onR
 
   const productTotal = product.variants.reduce((sum, v) =>
     sum + (parseFloat(v.quantity) || 0) * (parseFloat(v.unit_price) || 0), 0
-  )
+  ) * multiplier
 
   return (
     <div className="border border-gray-200 rounded-xl bg-gray-50 overflow-hidden">
@@ -178,6 +180,7 @@ export default function ItemForm({ product, productIndex, country, onChange, onR
               variant={variant}
               index={i}
               currency={currency}
+              multiplier={multiplier}
               onChange={handleVariantChange}
               onRemove={handleRemoveVariant}
               canRemove={product.variants.length > 1}

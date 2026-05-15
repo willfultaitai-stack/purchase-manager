@@ -297,12 +297,22 @@ export default function OrderModal({ isOpen, onClose, onSave, editOrder, initial
 
           {step === 2 && (
             <>
+              {(orderData.has_proxy_fee || orderData.has_tax) && (
+                <div className="bg-indigo-50 border border-indigo-100 rounded-lg px-4 py-2.5 text-xs text-indigo-700 flex flex-wrap gap-2">
+                  <span className="font-semibold">已套用：</span>
+                  {orderData.has_tax && <span>消費稅 ×1.10</span>}
+                  {orderData.has_proxy_fee && <span>代購費 ×1.08</span>}
+                  <span className="text-indigo-500">（小計已自動計入）</span>
+                </div>
+              )}
               {products.map((product, i) => (
                 <ItemForm
                   key={i}
                   product={product}
                   productIndex={i}
                   country={orderData.country}
+                  hasProxyFee={orderData.has_proxy_fee}
+                  hasTax={orderData.has_tax}
                   onChange={handleProductChange}
                   onRemove={handleRemoveProduct}
                   canRemove={products.length > 1}
