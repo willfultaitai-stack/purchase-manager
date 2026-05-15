@@ -52,9 +52,20 @@ function PhotoThumbnail({ url, name }) {
   )
 }
 
-export default function OrderCard({ order, onEdit, onDelete, onStatusToggle }) {
+export default function OrderCard({ order, onEdit, onDelete, onStatusToggle, onItemShipToggle }) {
   const [expanded, setExpanded] = useState(false)
   const [toggling, setToggling] = useState(false)
+  const [togglingItem, setTogglingItem] = useState(null)
+
+  const handleItemShip = async (e, itemId, currentVal) => {
+    e.stopPropagation()
+    setTogglingItem(itemId)
+    try {
+      await onItemShipToggle(itemId, !currentVal)
+    } finally {
+      setTogglingItem(null)
+    }
+  }
 
   const itemCount = order.purchase_items ? order.purchase_items.length : 0
 
@@ -156,14 +167,16 @@ export default function OrderCard({ order, onEdit, onDelete, onStatusToggle }) {
                     <th className="text-left px-3 py-2 font-medium">顏色</th>
                     <th className="text-right px-3 py-2 font-medium">數量</th>
                     <th className="text-right px-3 py-2 font-medium">單價</th>
-                    <th className="text-right px-4 py-2 font-medium">總計</th>
+                    <th className="text-right px-3 py-2 font-medium">總計</th>
+                    <th className="text-center px-4 py-2 font-medium w-16">出貨</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-50">
                   {order.purchase_items.map((item) => {
                     const total = item.total_price ?? (item.quantity * item.unit_price)
+                    const shipped = item.is_shipped || false
                     return (
-                      <tr key={item.id} className="hover:bg-gray-50">
+                      <tr key={item.id} className={`hover:bg-gray-50 transition-colors ${shipped ? 'opacity-50' : ''}`}>
                         <td className="px-4 py-2">
                           <PhotoThumbnail url={item.photo_url} name={item.item_name} />
                         </td>
@@ -173,8 +186,24 @@ export default function OrderCard({ order, onEdit, onDelete, onStatusToggle }) {
                         <td className="px-3 py-2 text-right text-gray-700">
                           {formatNumber(item.unit_price)} {item.currency}
                         </td>
-                        <td className="px-4 py-2 text-right font-semibold text-gray-800">
+                        <td className="px-3 py-2 text-right font-semibold text-gray-800">
                           {formatNumber(total)} {item.currency}
+                        </td>
+                        <td className="px-4 py-2 text-center">
+                          <button
+                            onClick={e => handleItemShip(e, item.id, shipped)}
+                            disabled={togglingItem === item.id}
+                            className={`w-6 h-6 rounded border-2 flex items-center justify-center mx-auto transition-colors ${
+                              shipped
+                                ? 'bg-green-500 border-green-500 text-white'
+                                : 'border-gray-300 hover:border-green-400 text-transparent'
+                            } disabled:opacity-50`}
+                            title={shipped ? '標記為未出貨' : '標記為已出貨'}
+                          >
+                            <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                            </svg>
+                          </button>
                         </td>
                       </tr>
                     )
@@ -193,24 +222,24 @@ export default function OrderCard({ order, onEdit, onDelete, onStatusToggle }) {
                       <>
                         {order.has_tax && (
                           <tr className="border-t border-gray-100 bg-gray-50">
-                            <td colSpan={5} className="px-4 py-1.5 text-right text-xs text-gray-500">消費稅（10%）</td>
+                            <td colSpan={6} className="px-4 py-1.5 text-right text-xs text-gray-500">消費稅（10%）</td>
                             <td className="px-4 py-1.5 text-right text-sm text-gray-600">{formatNumber(taxAmount)} {currency}</td>
                           </tr>
                         )}
                         {order.has_proxy_fee && (
                           <tr className="bg-gray-50">
-                            <td colSpan={5} className="px-4 py-1.5 text-right text-xs text-gray-500">代購手續費（8%）</td>
+                            <td colSpan={6} className="px-4 py-1.5 text-right text-xs text-gray-500">代購手續費（8%）</td>
                             <td className="px-4 py-1.5 text-right text-sm text-gray-600">{formatNumber(proxyAmount)} {currency}</td>
                           </tr>
                         )}
                         {shippingFee > 0 && (
                           <tr className="bg-gray-50">
-                            <td colSpan={5} className="px-4 py-1.5 text-right text-xs text-gray-500">運費</td>
+                            <td colSpan={6} className="px-4 py-1.5 text-right text-xs text-gray-500">運費</td>
                             <td className="px-4 py-1.5 text-right text-sm text-gray-600">{formatNumber(shippingFee)} TWD</td>
                           </tr>
                         )}
                         <tr className="border-t-2 border-gray-200 bg-gray-50">
-                          <td colSpan={5} className="px-4 py-2.5 text-right text-xs font-semibold text-gray-600">合計</td>
+                          <td colSpan={6} className="px-4 py-2.5 text-right text-xs font-semibold text-gray-600">合計</td>
                           <td className="px-4 py-2.5 text-right text-base font-bold text-green-500">
                             {formatNumber(grandTotal)} {currency}
                           </td>

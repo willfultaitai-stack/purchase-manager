@@ -156,6 +156,21 @@ export default function PurchaseManager({ prefilledOrder, onPrefilledConsumed })
     setOrders(prev => prev.map(o => o.id === orderId ? { ...o, status: newStatus } : o))
   }
 
+  const handleItemShipToggle = async (itemId, isShipped) => {
+    if (!supabase) return
+    const { error: err } = await supabase
+      .from('purchase_items')
+      .update({ is_shipped: isShipped })
+      .eq('id', itemId)
+    if (err) throw err
+    setOrders(prev => prev.map(o => ({
+      ...o,
+      purchase_items: o.purchase_items?.map(it =>
+        it.id === itemId ? { ...it, is_shipped: isShipped } : it
+      ),
+    })))
+  }
+
   const availableMonths = [...new Set(
     orders.map(o => o.order_date?.slice(0, 7)).filter(Boolean)
   )].sort().reverse()
@@ -270,6 +285,7 @@ export default function PurchaseManager({ prefilledOrder, onPrefilledConsumed })
             onEdit={o => { setEditOrder(o); setModalOpen(true) }}
             onDelete={id => setDeleteConfirm(id)}
             onStatusToggle={handleStatusToggle}
+            onItemShipToggle={handleItemShipToggle}
           />
         ))}
       </div>
