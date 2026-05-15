@@ -209,12 +209,14 @@ export default function ReceiptManager() {
                                 {/* Photo */}
                                 <td className="px-4 py-2.5">
                                   {item.photo_url ? (
-                                    <img
-                                      src={item.photo_url}
-                                      alt=""
-                                      className="w-9 h-9 object-cover rounded-lg border border-gray-200"
-                                      onError={e => { e.target.style.display = 'none' }}
-                                    />
+                                    <div className="w-9 h-9 rounded-lg border border-gray-200 overflow-hidden">
+                                      <img
+                                        src={item.photo_url}
+                                        alt=""
+                                        className="w-full h-full object-cover"
+                                        onError={e => { e.target.parentElement.style.display = 'none' }}
+                                      />
+                                    </div>
                                   ) : (
                                     <div className="w-9 h-9 bg-gray-100 rounded-lg border border-gray-200" />
                                   )}

@@ -35,12 +35,14 @@ function PhotoThumbnail({ url, name }) {
   const [error, setError] = useState(false)
   if (url && !error) {
     return (
-      <img
-        src={url}
-        alt={name}
-        onError={() => setError(true)}
-        className="w-12 h-12 object-cover rounded-lg border border-gray-200 flex-shrink-0"
-      />
+      <div className="w-12 h-12 rounded-lg border border-gray-200 overflow-hidden flex-shrink-0">
+        <img
+          src={url}
+          alt={name}
+          onError={() => setError(true)}
+          className="w-full h-full object-cover"
+        />
+      </div>
     )
   }
   return (
@@ -223,13 +225,13 @@ export default function OrderCard({ order, onEdit, onDelete, onStatusToggle, onI
                         {order.has_tax && (
                           <tr className="border-t border-gray-100 bg-gray-50">
                             <td colSpan={6} className="px-4 py-1.5 text-right text-xs text-gray-500">消費稅（10%）</td>
-                            <td className="px-4 py-1.5 text-right text-sm text-gray-600">{formatNumber(taxAmount)} {currency}</td>
+                            <td className="px-4 py-1.5 text-right text-sm text-gray-600 whitespace-nowrap">{formatNumber(taxAmount)} {currency}</td>
                           </tr>
                         )}
                         {order.has_proxy_fee && (
                           <tr className="bg-gray-50">
                             <td colSpan={6} className="px-4 py-1.5 text-right text-xs text-gray-500">代購手續費（8%）</td>
-                            <td className="px-4 py-1.5 text-right text-sm text-gray-600">{formatNumber(proxyAmount)} {currency}</td>
+                            <td className="px-4 py-1.5 text-right text-sm text-gray-600 whitespace-nowrap">{formatNumber(proxyAmount)} {currency}</td>
                           </tr>
                         )}
                         {shippingFee > 0 && (
@@ -240,7 +242,7 @@ export default function OrderCard({ order, onEdit, onDelete, onStatusToggle, onI
                         )}
                         <tr className="border-t-2 border-gray-200 bg-gray-50">
                           <td colSpan={6} className="px-4 py-2.5 text-right text-xs font-semibold text-gray-600">合計</td>
-                          <td className="px-4 py-2.5 text-right text-base font-bold text-brand">
+                          <td className="px-4 py-2.5 text-right text-base font-bold text-brand whitespace-nowrap">
                             {formatNumber(grandTotal)} {currency}
                           </td>
                         </tr>
