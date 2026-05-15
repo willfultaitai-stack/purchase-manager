@@ -48,6 +48,7 @@ export default function App() {
   const [activeTab, setActiveTab] = useState('calculator')
   const [prefilledOrder, setPrefilledOrder] = useState(null)
   const [savedItems, setSavedItems] = useState(loadSavedItems)
+  const [pendingRemoveId, setPendingRemoveId] = useState(null)
 
   useEffect(() => {
     try {
@@ -58,8 +59,17 @@ export default function App() {
   }, [savedItems])
 
   const handleOrder = (orderInfo) => {
-    setPrefilledOrder(orderInfo)
+    const { _sourceItemId, ...rest } = orderInfo
+    setPrefilledOrder(rest)
+    setPendingRemoveId(_sourceItemId ?? null)
     setActiveTab('purchases')
+  }
+
+  const handleOrderCreated = () => {
+    if (pendingRemoveId != null) {
+      setSavedItems(prev => prev.filter(i => i.id !== pendingRemoveId))
+      setPendingRemoveId(null)
+    }
   }
 
   const handleAddItem = (item) => {
@@ -120,6 +130,7 @@ export default function App() {
           <PurchaseManager
             prefilledOrder={prefilledOrder}
             onPrefilledConsumed={() => setPrefilledOrder(null)}
+            onOrderCreated={handleOrderCreated}
           />
         )}
         {activeTab === 'receipts' && <ReceiptManager />}

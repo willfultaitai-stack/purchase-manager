@@ -348,6 +348,7 @@ export default function CostCalculator({ onOrder, savedItems, onAddItem, onRemov
       brand_name: item.brandName || '',
       status: '待訂貨',
       productName: item.productName || '',
+      _sourceItemId: item.id,
     })
   }
 

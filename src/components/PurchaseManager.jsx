@@ -33,7 +33,7 @@ function SetupBanner() {
   )
 }
 
-export default function PurchaseManager({ prefilledOrder, onPrefilledConsumed }) {
+export default function PurchaseManager({ prefilledOrder, onPrefilledConsumed, onOrderCreated }) {
   const [orders, setOrders] = useState([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
@@ -125,6 +125,7 @@ export default function PurchaseManager({ prefilledOrder, onPrefilledConsumed })
       }))
       const { error: itemsErr } = await supabase.from('purchase_items').insert(itemsToInsert)
       if (itemsErr) throw itemsErr
+      onOrderCreated?.()
     }
 
     await fetchOrders()
