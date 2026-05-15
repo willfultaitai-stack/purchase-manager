@@ -181,7 +181,7 @@ export default function PurchaseManager({ prefilledOrder, onPrefilledConsumed })
                 key={c}
                 onClick={() => setFilterCountry(c)}
                 className={`px-3 py-1.5 text-xs font-medium transition-colors duration-150 ${
-                  filterCountry === c ? 'bg-indigo-600 text-white' : 'text-gray-600 hover:bg-gray-50'
+                  filterCountry === c ? 'bg-green-600 text-white' : 'text-gray-600 hover:bg-gray-50'
                 }`}
               >
                 {c}
@@ -196,7 +196,7 @@ export default function PurchaseManager({ prefilledOrder, onPrefilledConsumed })
                 key={s}
                 onClick={() => setFilterStatus(s)}
                 className={`px-3 py-1.5 text-xs font-medium transition-colors duration-150 ${
-                  filterStatus === s ? 'bg-indigo-600 text-white' : 'text-gray-600 hover:bg-gray-50'
+                  filterStatus === s ? 'bg-green-600 text-white' : 'text-gray-600 hover:bg-gray-50'
                 }`}
               >
                 {s}
@@ -208,7 +208,7 @@ export default function PurchaseManager({ prefilledOrder, onPrefilledConsumed })
           <select
             value={filterMonth}
             onChange={e => setFilterMonth(e.target.value)}
-            className="px-3 py-1.5 text-xs font-medium rounded-lg border border-gray-200 bg-white shadow-sm text-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-400"
+            className="px-3 py-1.5 text-xs font-medium rounded-lg border border-gray-200 bg-white shadow-sm text-gray-600 focus:outline-none focus:ring-2 focus:ring-green-400"
           >
             <option value="全部">全部月份</option>
             {availableMonths.map(m => (

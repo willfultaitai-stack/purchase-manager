@@ -168,9 +168,9 @@ export default function OrderModal({ isOpen, onClose, onSave, editOrder, initial
         {/* Step indicator */}
         <div className="px-6 pt-4">
           <div className="flex items-center gap-2">
-            <div className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold ${step >= 1 ? 'bg-indigo-600 text-white' : 'bg-gray-200 text-gray-500'}`}>1</div>
-            <div className={`flex-1 h-1 rounded-full ${step >= 2 ? 'bg-indigo-600' : 'bg-gray-200'}`} />
-            <div className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold ${step >= 2 ? 'bg-indigo-600 text-white' : 'bg-gray-200 text-gray-500'}`}>2</div>
+            <div className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold ${step >= 1 ? 'bg-green-600 text-white' : 'bg-gray-200 text-gray-500'}`}>1</div>
+            <div className={`flex-1 h-1 rounded-full ${step >= 2 ? 'bg-green-600' : 'bg-gray-200'}`} />
+            <div className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold ${step >= 2 ? 'bg-green-600 text-white' : 'bg-gray-200 text-gray-500'}`}>2</div>
           </div>
         </div>
 
@@ -243,7 +243,7 @@ export default function OrderModal({ isOpen, onClose, onSave, editOrder, initial
                           checked={orderData.has_proxy_fee}
                           onChange={e => setOrderData(prev => ({ ...prev, has_proxy_fee: e.target.checked }))}
                         />
-                        <div className={`w-10 h-6 rounded-full transition-colors duration-200 ${orderData.has_proxy_fee ? 'bg-indigo-600' : 'bg-gray-300'}`} />
+                        <div className={`w-10 h-6 rounded-full transition-colors duration-200 ${orderData.has_proxy_fee ? 'bg-green-600' : 'bg-gray-300'}`} />
                         <div className={`absolute top-1 left-1 w-4 h-4 bg-white rounded-full shadow transition-transform duration-200 ${orderData.has_proxy_fee ? 'translate-x-4' : ''}`} />
                       </div>
                       <span className="text-sm text-gray-700">含代購手續費（商品總額 × 8%）</span>
@@ -256,7 +256,7 @@ export default function OrderModal({ isOpen, onClose, onSave, editOrder, initial
                           checked={orderData.has_tax}
                           onChange={e => setOrderData(prev => ({ ...prev, has_tax: e.target.checked }))}
                         />
-                        <div className={`w-10 h-6 rounded-full transition-colors duration-200 ${orderData.has_tax ? 'bg-indigo-600' : 'bg-gray-300'}`} />
+                        <div className={`w-10 h-6 rounded-full transition-colors duration-200 ${orderData.has_tax ? 'bg-green-600' : 'bg-gray-300'}`} />
                         <div className={`absolute top-1 left-1 w-4 h-4 bg-white rounded-full shadow transition-transform duration-200 ${orderData.has_tax ? 'translate-x-4' : ''}`} />
                       </div>
                       <span className="text-sm text-gray-700">含日本消費稅（商品總額 × 10%）</span>
@@ -306,11 +306,11 @@ export default function OrderModal({ isOpen, onClose, onSave, editOrder, initial
           {step === 2 && (
             <>
               {(orderData.has_proxy_fee || orderData.has_tax) && (
-                <div className="bg-indigo-50 border border-indigo-100 rounded-lg px-4 py-2.5 text-xs text-indigo-700 flex flex-wrap gap-2">
+                <div className="bg-green-50 border border-green-100 rounded-lg px-4 py-2.5 text-xs text-green-700 flex flex-wrap gap-2">
                   <span className="font-semibold">已套用：</span>
                   {orderData.has_tax && <span>消費稅 ×1.10</span>}
                   {orderData.has_proxy_fee && <span>代購費 ×1.08</span>}
-                  <span className="text-indigo-500">（小計已自動計入）</span>
+                  <span className="text-green-500">（小計已自動計入）</span>
                 </div>
               )}
               {products.map((product, i) => (
@@ -330,7 +330,7 @@ export default function OrderModal({ isOpen, onClose, onSave, editOrder, initial
               <button
                 type="button"
                 onClick={handleAddProduct}
-                className="w-full py-2.5 border-2 border-dashed border-gray-300 rounded-lg text-sm text-gray-500 hover:border-indigo-400 hover:text-indigo-600 transition-colors duration-150 font-medium"
+                className="w-full py-2.5 border-2 border-dashed border-gray-300 rounded-lg text-sm text-gray-500 hover:border-green-400 hover:text-green-600 transition-colors duration-150 font-medium"
               >
                 + 新增商品
               </button>

@@ -111,7 +111,7 @@ export default function OrderCard({ order, onEdit, onDelete, onStatusToggle }) {
             {/* Edit */}
             <button
               onClick={e => { e.stopPropagation(); onEdit(order) }}
-              className="text-gray-400 hover:text-indigo-600 transition-colors"
+              className="text-gray-400 hover:text-green-600 transition-colors"
               title="編輯訂單"
             >
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -211,7 +211,7 @@ export default function OrderCard({ order, onEdit, onDelete, onStatusToggle }) {
                         )}
                         <tr className="border-t-2 border-gray-200 bg-gray-50">
                           <td colSpan={5} className="px-4 py-2.5 text-right text-xs font-semibold text-gray-600">合計</td>
-                          <td className="px-4 py-2.5 text-right text-base font-bold text-indigo-700">
+                          <td className="px-4 py-2.5 text-right text-base font-bold text-green-700">
                             {formatNumber(grandTotal)} {currency}
                           </td>
                         </tr>

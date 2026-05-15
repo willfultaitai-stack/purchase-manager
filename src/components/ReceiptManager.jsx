@@ -96,7 +96,7 @@ export default function ReceiptManager() {
               key={s}
               onClick={() => setFilterStatus(s)}
               className={`px-3 py-1.5 text-xs font-medium transition-colors duration-150 ${
-                filterStatus === s ? 'bg-indigo-600 text-white' : 'text-gray-600 hover:bg-gray-50'
+                filterStatus === s ? 'bg-green-600 text-white' : 'text-gray-600 hover:bg-gray-50'
               }`}
             >
               {s}
@@ -105,7 +105,7 @@ export default function ReceiptManager() {
         </div>
         <button
           onClick={fetchData}
-          className="ml-auto text-xs text-gray-500 hover:text-indigo-600 px-2.5 py-1.5 rounded-lg border border-gray-200 bg-white shadow-sm transition-colors"
+          className="ml-auto text-xs text-gray-500 hover:text-green-600 px-2.5 py-1.5 rounded-lg border border-gray-200 bg-white shadow-sm transition-colors"
         >
           重新整理
         </button>
@@ -285,13 +285,13 @@ export default function ReceiptManager() {
                                           onChange={e => setNewBatch(p => ({ ...p, [item.id]: e.target.value }))}
                                           onKeyDown={e => e.key === 'Enter' && handleAddBatch(item)}
                                           placeholder="數量"
-                                          className="w-16 text-xs border border-gray-300 rounded px-2 py-0.5 focus:outline-none focus:ring-1 focus:ring-indigo-400 text-center"
+                                          className="w-16 text-xs border border-gray-300 rounded px-2 py-0.5 focus:outline-none focus:ring-1 focus:ring-green-400 text-center"
                                         />
                                         {newBatch[item.id] && (
                                           <button
                                             onClick={() => handleAddBatch(item)}
                                             disabled={saving === item.id}
-                                            className="text-xs text-white bg-indigo-500 hover:bg-indigo-600 px-2 py-0.5 rounded font-medium disabled:opacity-50 transition-colors"
+                                            className="text-xs text-white bg-green-500 hover:bg-green-600 px-2 py-0.5 rounded font-medium disabled:opacity-50 transition-colors"
                                           >
                                             {saving === item.id ? '…' : '儲存'}
                                           </button>

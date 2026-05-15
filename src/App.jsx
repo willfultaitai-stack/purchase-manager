@@ -4,9 +4,33 @@ import PurchaseManager from './components/PurchaseManager'
 import ReceiptManager from './components/ReceiptManager'
 
 const TABS = [
-  { id: 'calculator', label: '成本計算機', icon: '🧮' },
-  { id: 'purchases', label: '採購管理', icon: '📦' },
-  { id: 'receipts', label: '點貨管理', icon: '✅' },
+  {
+    id: 'calculator',
+    label: '成本計算機',
+    icon: (
+      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.75} d="M9 7H6a2 2 0 00-2 2v9a2 2 0 002 2h12a2 2 0 002-2V9a2 2 0 00-2-2h-3M9 7V5a2 2 0 012-2h2a2 2 0 012 2v2M9 7h6M9 12h.01M12 12h.01M15 12h.01M9 15h.01M12 15h.01M15 15h.01" />
+      </svg>
+    ),
+  },
+  {
+    id: 'purchases',
+    label: '採購管理',
+    icon: (
+      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.75} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+      </svg>
+    ),
+  },
+  {
+    id: 'receipts',
+    label: '點貨管理',
+    icon: (
+      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.75} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+      </svg>
+    ),
+  },
 ]
 
 function loadSavedItems() {
@@ -29,7 +53,7 @@ export default function App() {
     try {
       localStorage.setItem('comparison_items', JSON.stringify(savedItems))
     } catch {
-      // localStorage full — silently ignore
+      // localStorage full
     }
   }, [savedItems])
 
@@ -51,24 +75,29 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100">
-      <header className="bg-white border-b border-gray-200 sticky top-0 z-40 shadow-sm">
-        <div className="max-w-4xl mx-auto px-4">
-          <div className="flex items-center h-14 gap-6">
-            <h1 className="text-base font-bold text-gray-900 whitespace-nowrap">採購管理系統</h1>
-            <nav className="flex gap-1">
+    <div className="min-h-screen bg-gray-50">
+      <header className="bg-white border-b border-gray-200 sticky top-0 z-40">
+        <div className="max-w-5xl mx-auto px-5">
+          <div className="flex items-center h-14 gap-8">
+            <span className="text-base font-bold text-gray-900 tracking-tight whitespace-nowrap">
+              採購管理系統
+            </span>
+            <nav className="flex items-center h-full gap-1">
               {TABS.map(tab => (
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
-                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors duration-150 ${
+                  className={`relative flex items-center gap-1.5 px-3 h-full text-sm font-medium transition-colors duration-150 ${
                     activeTab === tab.id
-                      ? 'bg-indigo-50 text-indigo-700'
-                      : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
+                      ? 'text-green-600'
+                      : 'text-gray-500 hover:text-gray-800'
                   }`}
                 >
-                  <span>{tab.icon}</span>
+                  {tab.icon}
                   <span>{tab.label}</span>
+                  {activeTab === tab.id && (
+                    <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-green-600 rounded-t" />
+                  )}
                 </button>
               ))}
             </nav>
@@ -76,7 +105,7 @@ export default function App() {
         </div>
       </header>
 
-      <main className="max-w-4xl mx-auto px-4 py-6">
+      <main className="max-w-5xl mx-auto px-5 py-6">
         {activeTab === 'calculator' && (
           <CostCalculator
             onOrder={handleOrder}

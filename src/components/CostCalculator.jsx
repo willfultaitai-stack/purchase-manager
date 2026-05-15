@@ -110,7 +110,7 @@ function JapaneseCalculator({ onSave }) {
       <label className="flex items-center gap-3 cursor-pointer select-none w-fit">
         <div className="relative">
           <input type="checkbox" className="sr-only" checked={hasProxyFee} onChange={e => setHasProxyFee(e.target.checked)} />
-          <div className={`w-10 h-6 rounded-full transition-colors duration-200 ${hasProxyFee ? 'bg-indigo-600' : 'bg-gray-300'}`} />
+          <div className={`w-10 h-6 rounded-full transition-colors duration-200 ${hasProxyFee ? 'bg-green-600' : 'bg-gray-300'}`} />
           <div className={`absolute top-1 left-1 w-4 h-4 bg-white rounded-full shadow transition-transform duration-200 ${hasProxyFee ? 'translate-x-4' : ''}`} />
         </div>
         <span className="text-sm font-medium text-gray-700">含代購手續費（×1.08）</span>
@@ -235,11 +235,11 @@ function ComparisonList({ items, onRemove, onUpdate, onOrder }) {
                             value={editingPrice}
                             onChange={e => setEditingPrice(e.target.value)}
                             onKeyDown={e => e.key === 'Enter' && handlePriceSave(item.id)}
-                            className="w-24 text-sm border border-indigo-400 rounded-lg px-2 py-1 focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                            className="w-24 text-sm border border-green-400 rounded-lg px-2 py-1 focus:outline-none focus:ring-2 focus:ring-green-400"
                           />
                           <button
                             onClick={() => handlePriceSave(item.id)}
-                            className="text-xs px-2 py-1 rounded-lg bg-indigo-600 text-white font-medium hover:bg-indigo-700"
+                            className="text-xs px-2 py-1 rounded-lg bg-green-600 text-white font-medium hover:bg-green-700"
                           >
                             儲存
                           </button>
@@ -247,7 +247,7 @@ function ComparisonList({ items, onRemove, onUpdate, onOrder }) {
                       ) : (
                         <button
                           onClick={() => handlePriceEdit(item)}
-                          className="text-sm font-bold text-indigo-600 hover:underline"
+                          className="text-sm font-bold text-green-600 hover:underline"
                         >
                           {hasPrice ? `NT$ ${formatNumber(selling)}` : '點擊輸入'}
                         </button>
@@ -267,7 +267,7 @@ function ComparisonList({ items, onRemove, onUpdate, onOrder }) {
                 <div className="flex flex-col items-end gap-2 flex-shrink-0">
                   <button
                     onClick={() => onOrder(item)}
-                    className="text-xs px-3 py-1.5 rounded-lg bg-indigo-600 text-white font-medium hover:bg-indigo-700 transition-colors"
+                    className="text-xs px-3 py-1.5 rounded-lg bg-green-600 text-white font-medium hover:bg-green-700 transition-colors"
                   >
                     訂購
                   </button>
@@ -395,7 +395,7 @@ export default function CostCalculator({ onOrder, savedItems, onAddItem, onRemov
               <button
                 type="button"
                 onClick={() => fileInputRef.current?.click()}
-                className="w-full py-3 border-2 border-dashed border-gray-300 rounded-lg text-sm text-gray-400 hover:border-indigo-400 hover:text-indigo-500 transition-colors flex items-center justify-center gap-2"
+                className="w-full py-3 border-2 border-dashed border-gray-300 rounded-lg text-sm text-gray-400 hover:border-green-400 hover:text-green-500 transition-colors flex items-center justify-center gap-2"
               >
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -423,7 +423,7 @@ export default function CostCalculator({ onOrder, savedItems, onAddItem, onRemov
                 : 'text-gray-500 hover:text-gray-700 hover:bg-gray-50'
             }`}
           >
-            🇰🇷 韓國商品
+            韓國商品
           </button>
           <button
             onClick={() => setActiveTab('japan')}
@@ -433,7 +433,7 @@ export default function CostCalculator({ onOrder, savedItems, onAddItem, onRemov
                 : 'text-gray-500 hover:text-gray-700 hover:bg-gray-50'
             }`}
           >
-            🇯🇵 日本商品
+            日本商品
           </button>
         </div>
 
