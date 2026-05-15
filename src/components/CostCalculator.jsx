@@ -67,7 +67,7 @@ function KoreanCalculator({ onSave }) {
         disabled={!hasInput}
         className="w-full py-2 rounded-lg text-sm font-medium border-2 border-dashed border-pink-300 text-pink-600 hover:bg-pink-50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
       >
-        + 加入比對清單
+        + 儲存
       </button>
     </div>
   )
@@ -152,7 +152,7 @@ function JapaneseCalculator({ onSave }) {
         disabled={!hasInput}
         className="w-full py-2 rounded-lg text-sm font-medium border-2 border-dashed border-red-300 text-red-600 hover:bg-red-50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
       >
-        + 加入比對清單
+        + 儲存
       </button>
     </div>
   )
@@ -160,6 +160,19 @@ function JapaneseCalculator({ onSave }) {
 
 function ComparisonList({ items, onRemove, onUpdate, onOrder }) {
   const [confirmId, setConfirmId] = useState(null)
+  const [editingId, setEditingId] = useState(null)
+  const [editingPrice, setEditingPrice] = useState('')
+
+  const handlePriceEdit = (item) => {
+    setEditingId(item.id)
+    setEditingPrice(item.sellingPrice || '')
+  }
+
+  const handlePriceSave = (id) => {
+    onUpdate(id, { sellingPrice: editingPrice })
+    setEditingId(null)
+    setEditingPrice('')
+  }
 
   if (items.length === 0) return null
 
@@ -172,6 +185,7 @@ function ComparisonList({ items, onRemove, onUpdate, onOrder }) {
           const tax = selling * 0.05
           const profit = selling - (item.cost + tax)
           const hasPrice = selling > 0
+          const isEditing = editingId === item.id
 
           return (
             <div key={item.id} className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
@@ -204,23 +218,42 @@ function ComparisonList({ items, onRemove, onUpdate, onOrder }) {
                   <p className="text-xs text-gray-400 mb-2">{item.detail}</p>
 
                   {/* Cost + selling price + profit */}
-                  <div className="flex flex-wrap items-end gap-3">
+                  <div className="flex flex-wrap items-end gap-3 mt-1">
                     <div>
                       <p className="text-xs text-gray-400">估算成本</p>
                       <p className="text-sm font-bold text-gray-800">NT$ {formatNumber(item.cost)}</p>
                     </div>
                     <div>
                       <p className="text-xs text-gray-400">建議售價</p>
-                      <input
-                        type="number"
-                        min="0"
-                        placeholder="輸入售價"
-                        value={item.sellingPrice || ''}
-                        onChange={e => onUpdate(item.id, { sellingPrice: e.target.value })}
-                        className="w-28 text-sm border border-gray-300 rounded-lg px-2 py-1 focus:outline-none focus:ring-2 focus:ring-indigo-400"
-                      />
+                      {isEditing ? (
+                        <div className="flex gap-1">
+                          <input
+                            type="number"
+                            min="0"
+                            autoFocus
+                            placeholder="輸入售價"
+                            value={editingPrice}
+                            onChange={e => setEditingPrice(e.target.value)}
+                            onKeyDown={e => e.key === 'Enter' && handlePriceSave(item.id)}
+                            className="w-24 text-sm border border-indigo-400 rounded-lg px-2 py-1 focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                          />
+                          <button
+                            onClick={() => handlePriceSave(item.id)}
+                            className="text-xs px-2 py-1 rounded-lg bg-indigo-600 text-white font-medium hover:bg-indigo-700"
+                          >
+                            儲存
+                          </button>
+                        </div>
+                      ) : (
+                        <button
+                          onClick={() => handlePriceEdit(item)}
+                          className="text-sm font-bold text-indigo-600 hover:underline"
+                        >
+                          {hasPrice ? `NT$ ${formatNumber(selling)}` : '點擊輸入'}
+                        </button>
+                      )}
                     </div>
-                    {hasPrice && (
+                    {hasPrice && !isEditing && (
                       <div>
                         <p className="text-xs text-gray-400">利潤（扣稅5%）</p>
                         <p className={`text-sm font-bold ${profit >= 0 ? 'text-green-600' : 'text-red-500'}`}>
