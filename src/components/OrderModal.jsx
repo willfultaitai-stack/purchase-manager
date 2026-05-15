@@ -19,6 +19,8 @@ const emptyOrder = (initial) => ({
   status: initial?.status || '待訂貨',
   order_date: new Date().toISOString().split('T')[0],
   shipping_fee: '',
+  has_proxy_fee: false,
+  has_tax: false,
 })
 
 export default function OrderModal({ isOpen, onClose, onSave, editOrder, initialData }) {
@@ -37,6 +39,8 @@ export default function OrderModal({ isOpen, onClose, onSave, editOrder, initial
           status: editOrder.status,
           order_date: editOrder.order_date,
           shipping_fee: editOrder.shipping_fee || '',
+          has_proxy_fee: editOrder.has_proxy_fee || false,
+          has_tax: editOrder.has_tax || false,
         })
         if (editOrder.purchase_items && editOrder.purchase_items.length > 0) {
           const grouped = {}
@@ -217,6 +221,41 @@ export default function OrderModal({ isOpen, onClose, onSave, editOrder, initial
                   className="input-field"
                 />
               </div>
+
+              {/* Japan-only: proxy fee + tax */}
+              {orderData.country === '日本' && (
+                <div>
+                  <label className="label">日本附加費用</label>
+                  <div className="space-y-2">
+                    <label className="flex items-center gap-3 cursor-pointer select-none">
+                      <div className="relative flex-shrink-0">
+                        <input
+                          type="checkbox"
+                          className="sr-only"
+                          checked={orderData.has_proxy_fee}
+                          onChange={e => setOrderData(prev => ({ ...prev, has_proxy_fee: e.target.checked }))}
+                        />
+                        <div className={`w-10 h-6 rounded-full transition-colors duration-200 ${orderData.has_proxy_fee ? 'bg-indigo-600' : 'bg-gray-300'}`} />
+                        <div className={`absolute top-1 left-1 w-4 h-4 bg-white rounded-full shadow transition-transform duration-200 ${orderData.has_proxy_fee ? 'translate-x-4' : ''}`} />
+                      </div>
+                      <span className="text-sm text-gray-700">含代購手續費（商品總額 × 8%）</span>
+                    </label>
+                    <label className="flex items-center gap-3 cursor-pointer select-none">
+                      <div className="relative flex-shrink-0">
+                        <input
+                          type="checkbox"
+                          className="sr-only"
+                          checked={orderData.has_tax}
+                          onChange={e => setOrderData(prev => ({ ...prev, has_tax: e.target.checked }))}
+                        />
+                        <div className={`w-10 h-6 rounded-full transition-colors duration-200 ${orderData.has_tax ? 'bg-indigo-600' : 'bg-gray-300'}`} />
+                        <div className={`absolute top-1 left-1 w-4 h-4 bg-white rounded-full shadow transition-transform duration-200 ${orderData.has_tax ? 'translate-x-4' : ''}`} />
+                      </div>
+                      <span className="text-sm text-gray-700">含日本消費稅（商品總額 × 10%）</span>
+                    </label>
+                  </div>
+                </div>
+              )}
 
               {/* Order date */}
               <div>

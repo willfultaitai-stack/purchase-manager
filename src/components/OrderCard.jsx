@@ -181,24 +181,43 @@ export default function OrderCard({ order, onEdit, onDelete, onStatusToggle }) {
                   })}
                 </tbody>
                 <tfoot>
-                  {order.shipping_fee > 0 && (
-                    <tr className="border-t border-gray-100 bg-gray-50">
-                      <td colSpan={5} className="px-4 py-2 text-right text-xs text-gray-500">運費</td>
-                      <td className="px-4 py-2 text-right text-sm font-medium text-gray-700">
-                        {formatNumber(order.shipping_fee)} TWD
-                      </td>
-                    </tr>
-                  )}
-                  <tr className="border-t-2 border-gray-200 bg-gray-50">
-                    <td colSpan={5} className="px-4 py-2.5 text-right text-xs font-semibold text-gray-600">合計</td>
-                    <td className="px-4 py-2.5 text-right text-base font-bold text-indigo-700">
-                      {formatNumber(
-                        (order.purchase_items.reduce((sum, it) =>
-                          sum + (it.total_price ?? it.quantity * it.unit_price), 0
-                        )) + (order.shipping_fee || 0)
-                      )} {order.purchase_items[0]?.currency || 'TWD'}
-                    </td>
-                  </tr>
+                  {(() => {
+                    const currency = order.purchase_items[0]?.currency || 'TWD'
+                    const itemsTotal = order.purchase_items.reduce((sum, it) =>
+                      sum + (it.total_price ?? it.quantity * it.unit_price), 0)
+                    const taxAmount = order.has_tax ? itemsTotal * 0.10 : 0
+                    const proxyAmount = order.has_proxy_fee ? itemsTotal * 0.08 : 0
+                    const shippingFee = order.shipping_fee || 0
+                    const grandTotal = itemsTotal + taxAmount + proxyAmount + shippingFee
+                    return (
+                      <>
+                        {order.has_tax && (
+                          <tr className="border-t border-gray-100 bg-gray-50">
+                            <td colSpan={5} className="px-4 py-1.5 text-right text-xs text-gray-500">消費稅（10%）</td>
+                            <td className="px-4 py-1.5 text-right text-sm text-gray-600">{formatNumber(taxAmount)} {currency}</td>
+                          </tr>
+                        )}
+                        {order.has_proxy_fee && (
+                          <tr className="bg-gray-50">
+                            <td colSpan={5} className="px-4 py-1.5 text-right text-xs text-gray-500">代購手續費（8%）</td>
+                            <td className="px-4 py-1.5 text-right text-sm text-gray-600">{formatNumber(proxyAmount)} {currency}</td>
+                          </tr>
+                        )}
+                        {shippingFee > 0 && (
+                          <tr className="bg-gray-50">
+                            <td colSpan={5} className="px-4 py-1.5 text-right text-xs text-gray-500">運費</td>
+                            <td className="px-4 py-1.5 text-right text-sm text-gray-600">{formatNumber(shippingFee)} TWD</td>
+                          </tr>
+                        )}
+                        <tr className="border-t-2 border-gray-200 bg-gray-50">
+                          <td colSpan={5} className="px-4 py-2.5 text-right text-xs font-semibold text-gray-600">合計</td>
+                          <td className="px-4 py-2.5 text-right text-base font-bold text-indigo-700">
+                            {formatNumber(grandTotal)} {currency}
+                          </td>
+                        </tr>
+                      </>
+                    )
+                  })()}
                 </tfoot>
               </table>
             </div>
