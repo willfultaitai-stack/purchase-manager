@@ -4,14 +4,14 @@ import { supabase, isSupabaseConfigured } from '../lib/supabase'
 const STATUS_FILTERS = ['全部', '待訂貨', '已訂購', '已出貨']
 
 const COUNTRY_COLOR = {
-  '台灣': 'text-blue-600',
+  '台灣': 'text-blue-400',
   '韓國': 'text-green-500',
-  '日本': 'text-amber-600',
+  '日本': 'text-yellow-600',
 }
 
 const STATUS_STYLE = {
-  '待訂貨': 'bg-blue-50 text-blue-600',
-  '已訂購': 'bg-amber-50 text-amber-600',
+  '待訂貨': 'bg-blue-50 text-blue-400',
+  '已訂購': 'bg-yellow-50 text-yellow-600',
   '已出貨': 'bg-green-50 text-green-500',
 }
 
@@ -80,8 +80,8 @@ export default function ReceiptManager() {
 
   if (!isSupabaseConfigured) {
     return (
-      <div className="bg-amber-50 border border-amber-200 rounded-xl p-5">
-        <p className="text-sm text-amber-700">請先設定 Supabase 才能使用點貨管理功能。</p>
+      <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-5">
+        <p className="text-sm text-yellow-700">請先設定 Supabase 才能使用點貨管理功能。</p>
       </div>
     )
   }

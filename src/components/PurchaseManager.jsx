@@ -8,24 +8,24 @@ const STATUS_FILTERS = ['全部', '待訂貨', '已訂購', '已出貨']
 
 function SetupBanner() {
   return (
-    <div className="bg-amber-50 border border-amber-200 rounded-xl p-5 mb-6">
+    <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-5 mb-6">
       <div className="flex gap-3">
         <div className="flex-shrink-0 mt-0.5">
-          <svg className="w-5 h-5 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <svg className="w-5 h-5 text-yellow-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
         </div>
         <div>
-          <h3 className="text-sm font-semibold text-amber-800 mb-1">尚未設定 Supabase</h3>
-          <p className="text-sm text-amber-700 mb-3">
+          <h3 className="text-sm font-semibold text-yellow-800 mb-1">尚未設定 Supabase</h3>
+          <p className="text-sm text-yellow-700 mb-3">
             採購管理功能需要連接 Supabase 資料庫才能使用。請依照以下步驟設定：
           </p>
-          <ol className="text-sm text-amber-700 space-y-1 list-decimal list-inside">
+          <ol className="text-sm text-yellow-700 space-y-1 list-decimal list-inside">
             <li>在 <a href="https://supabase.com" target="_blank" rel="noreferrer" className="underline font-medium">supabase.com</a> 建立免費專案</li>
-            <li>執行 <code className="bg-amber-100 px-1 rounded font-mono text-xs">supabase/schema.sql</code> 以建立資料表</li>
-            <li>在 Storage 建立名為 <code className="bg-amber-100 px-1 rounded font-mono text-xs">product-photos</code> 的公開 Bucket</li>
-            <li>複製 <code className="bg-amber-100 px-1 rounded font-mono text-xs">.env.example</code> 為 <code className="bg-amber-100 px-1 rounded font-mono text-xs">.env</code> 並填入您的 URL 與 anon key</li>
-            <li>重新啟動開發伺服器 (<code className="bg-amber-100 px-1 rounded font-mono text-xs">npm run dev</code>)</li>
+            <li>執行 <code className="bg-yellow-100 px-1 rounded font-mono text-xs">supabase/schema.sql</code> 以建立資料表</li>
+            <li>在 Storage 建立名為 <code className="bg-yellow-100 px-1 rounded font-mono text-xs">product-photos</code> 的公開 Bucket</li>
+            <li>複製 <code className="bg-yellow-100 px-1 rounded font-mono text-xs">.env.example</code> 為 <code className="bg-yellow-100 px-1 rounded font-mono text-xs">.env</code> 並填入您的 URL 與 anon key</li>
+            <li>重新啟動開發伺服器 (<code className="bg-yellow-100 px-1 rounded font-mono text-xs">npm run dev</code>)</li>
           </ol>
         </div>
       </div>

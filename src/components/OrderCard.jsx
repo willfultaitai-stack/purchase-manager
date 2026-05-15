@@ -7,9 +7,9 @@ function formatNumber(num) {
 
 function CountryBadge({ country }) {
   const styles = {
-    '台灣': 'bg-blue-50 text-blue-600',
+    '台灣': 'bg-blue-50 text-blue-400',
     '韓國': 'bg-green-50 text-green-500',
-    '日本': 'bg-amber-50 text-amber-600',
+    '日本': 'bg-yellow-50 text-yellow-600',
   }
   return (
     <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold ${styles[country] || 'bg-gray-100 text-gray-600'}`}>
@@ -20,8 +20,8 @@ function CountryBadge({ country }) {
 
 function StatusBadge({ status }) {
   const styles = {
-    '待訂貨': 'bg-blue-50 text-blue-600',
-    '已訂購': 'bg-amber-50 text-amber-600',
+    '待訂貨': 'bg-blue-50 text-blue-400',
+    '已訂購': 'bg-yellow-50 text-yellow-600',
     '已出貨': 'bg-green-50 text-green-500',
   }
   return (
@@ -100,7 +100,7 @@ export default function OrderCard({ order, onEdit, onDelete, onStatusToggle }) {
                 disabled={toggling}
                 className={`text-xs px-2 py-1 rounded-lg border font-medium transition-colors duration-150 ${
                   order.status === '待訂貨'
-                    ? 'border-blue-200 text-blue-600 hover:bg-blue-50'
+                    ? 'border-blue-200 text-blue-400 hover:bg-blue-50'
                     : 'border-green-200 text-green-500 hover:bg-green-50'
                 } disabled:opacity-50`}
               >
