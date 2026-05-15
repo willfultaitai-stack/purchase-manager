@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import ItemForm from './ItemForm'
 
 const COUNTRIES = ['台灣', '韓國', '日本']
@@ -29,8 +29,13 @@ export default function OrderModal({ isOpen, onClose, onSave, editOrder, initial
   const [products, setProducts] = useState([emptyProduct()])
   const [saving, setSaving] = useState(false)
   const [errors, setErrors] = useState({})
+  const prevIsOpen = useRef(false)
 
   useEffect(() => {
+    const justOpened = isOpen && !prevIsOpen.current
+    prevIsOpen.current = isOpen
+    if (!justOpened) return
+
     if (isOpen) {
       if (editOrder) {
         setOrderData({
