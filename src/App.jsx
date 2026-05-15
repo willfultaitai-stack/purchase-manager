@@ -89,14 +89,14 @@ export default function App() {
                   onClick={() => setActiveTab(tab.id)}
                   className={`relative flex items-center gap-1.5 px-3 h-full text-sm font-medium transition-colors duration-150 ${
                     activeTab === tab.id
-                      ? 'text-green-600'
+                      ? 'text-green-500'
                       : 'text-gray-500 hover:text-gray-800'
                   }`}
                 >
                   {tab.icon}
                   <span>{tab.label}</span>
                   {activeTab === tab.id && (
-                    <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-green-600 rounded-t" />
+                    <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-green-500 rounded-t" />
                   )}
                 </button>
               ))}

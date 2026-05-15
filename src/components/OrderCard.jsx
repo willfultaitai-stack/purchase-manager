@@ -8,7 +8,7 @@ function formatNumber(num) {
 function CountryBadge({ country }) {
   const styles = {
     '台灣': 'bg-blue-50 text-blue-600',
-    '韓國': 'bg-green-50 text-green-700',
+    '韓國': 'bg-green-50 text-green-500',
     '日本': 'bg-amber-50 text-amber-600',
   }
   return (
@@ -22,7 +22,7 @@ function StatusBadge({ status }) {
   const styles = {
     '待訂貨': 'bg-blue-50 text-blue-600',
     '已訂購': 'bg-amber-50 text-amber-600',
-    '已出貨': 'bg-green-50 text-green-700',
+    '已出貨': 'bg-green-50 text-green-500',
   }
   return (
     <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold ${styles[status] || 'bg-gray-100 text-gray-600'}`}>
@@ -101,7 +101,7 @@ export default function OrderCard({ order, onEdit, onDelete, onStatusToggle }) {
                 className={`text-xs px-2 py-1 rounded-lg border font-medium transition-colors duration-150 ${
                   order.status === '待訂貨'
                     ? 'border-blue-200 text-blue-600 hover:bg-blue-50'
-                    : 'border-green-200 text-green-700 hover:bg-green-50'
+                    : 'border-green-200 text-green-500 hover:bg-green-50'
                 } disabled:opacity-50`}
               >
                 {toggling ? '...' : nextLabel[order.status]}
@@ -111,7 +111,7 @@ export default function OrderCard({ order, onEdit, onDelete, onStatusToggle }) {
             {/* Edit */}
             <button
               onClick={e => { e.stopPropagation(); onEdit(order) }}
-              className="text-gray-400 hover:text-green-600 transition-colors"
+              className="text-gray-400 hover:text-green-500 transition-colors"
               title="編輯訂單"
             >
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -211,7 +211,7 @@ export default function OrderCard({ order, onEdit, onDelete, onStatusToggle }) {
                         )}
                         <tr className="border-t-2 border-gray-200 bg-gray-50">
                           <td colSpan={5} className="px-4 py-2.5 text-right text-xs font-semibold text-gray-600">合計</td>
-                          <td className="px-4 py-2.5 text-right text-base font-bold text-green-700">
+                          <td className="px-4 py-2.5 text-right text-base font-bold text-green-500">
                             {formatNumber(grandTotal)} {currency}
                           </td>
                         </tr>

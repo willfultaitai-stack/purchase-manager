@@ -190,7 +190,7 @@ export default function ItemForm({ product, productIndex, country, hasProxyFee, 
           <button
             type="button"
             onClick={handleAddVariant}
-            className="w-full py-1.5 mt-1 text-xs text-green-500 hover:text-green-700 font-medium hover:bg-green-50 rounded transition-colors"
+            className="w-full py-1.5 mt-1 text-xs text-green-500 hover:text-green-500 font-medium hover:bg-green-50 rounded transition-colors"
           >
             + 新增規格
           </button>

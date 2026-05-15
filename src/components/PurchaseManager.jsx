@@ -181,7 +181,7 @@ export default function PurchaseManager({ prefilledOrder, onPrefilledConsumed })
                 key={c}
                 onClick={() => setFilterCountry(c)}
                 className={`px-3 py-1.5 text-xs font-medium transition-colors duration-150 ${
-                  filterCountry === c ? 'bg-green-600 text-white' : 'text-gray-600 hover:bg-gray-50'
+                  filterCountry === c ? 'bg-green-500 text-white' : 'text-gray-600 hover:bg-gray-50'
                 }`}
               >
                 {c}
@@ -196,7 +196,7 @@ export default function PurchaseManager({ prefilledOrder, onPrefilledConsumed })
                 key={s}
                 onClick={() => setFilterStatus(s)}
                 className={`px-3 py-1.5 text-xs font-medium transition-colors duration-150 ${
-                  filterStatus === s ? 'bg-green-600 text-white' : 'text-gray-600 hover:bg-gray-50'
+                  filterStatus === s ? 'bg-green-500 text-white' : 'text-gray-600 hover:bg-gray-50'
                 }`}
               >
                 {s}

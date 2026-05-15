@@ -5,14 +5,14 @@ const STATUS_FILTERS = ['全部', '待訂貨', '已訂購', '已出貨']
 
 const COUNTRY_COLOR = {
   '台灣': 'text-blue-600',
-  '韓國': 'text-green-700',
+  '韓國': 'text-green-500',
   '日本': 'text-amber-600',
 }
 
 const STATUS_STYLE = {
   '待訂貨': 'bg-blue-50 text-blue-600',
   '已訂購': 'bg-amber-50 text-amber-600',
-  '已出貨': 'bg-green-50 text-green-700',
+  '已出貨': 'bg-green-50 text-green-500',
 }
 
 const BATCH_LABEL = ['第1批', '第2批', '第3批', '第4批', '第5批']
@@ -96,7 +96,7 @@ export default function ReceiptManager() {
               key={s}
               onClick={() => setFilterStatus(s)}
               className={`px-3 py-1.5 text-xs font-medium transition-colors duration-150 ${
-                filterStatus === s ? 'bg-green-600 text-white' : 'text-gray-600 hover:bg-gray-50'
+                filterStatus === s ? 'bg-green-500 text-white' : 'text-gray-600 hover:bg-gray-50'
               }`}
             >
               {s}
@@ -105,7 +105,7 @@ export default function ReceiptManager() {
         </div>
         <button
           onClick={fetchData}
-          className="ml-auto text-xs text-gray-500 hover:text-green-600 px-2.5 py-1.5 rounded-lg border border-gray-200 bg-white shadow-sm transition-colors"
+          className="ml-auto text-xs text-gray-500 hover:text-green-500 px-2.5 py-1.5 rounded-lg border border-gray-200 bg-white shadow-sm transition-colors"
         >
           重新整理
         </button>
@@ -291,7 +291,7 @@ export default function ReceiptManager() {
                                           <button
                                             onClick={() => handleAddBatch(item)}
                                             disabled={saving === item.id}
-                                            className="text-xs text-white bg-green-500 hover:bg-green-600 px-2 py-0.5 rounded font-medium disabled:opacity-50 transition-colors"
+                                            className="text-xs text-white bg-green-500 hover:bg-green-500 px-2 py-0.5 rounded font-medium disabled:opacity-50 transition-colors"
                                           >
                                             {saving === item.id ? '…' : '儲存'}
                                           </button>

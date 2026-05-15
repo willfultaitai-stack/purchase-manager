@@ -65,7 +65,7 @@ function KoreanCalculator({ onSave }) {
           detail: `KRW ${Number(krwAmount || 0).toLocaleString()}／${weightKg || 0} kg`,
         })}
         disabled={!hasInput}
-        className="w-full py-2 rounded-lg text-sm font-medium border-2 border-dashed border-green-300 text-green-600 hover:bg-green-50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+        className="w-full py-2 rounded-lg text-sm font-medium border-2 border-dashed border-green-300 text-green-500 hover:bg-green-50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
       >
         + 儲存
       </button>
@@ -110,7 +110,7 @@ function JapaneseCalculator({ onSave }) {
       <label className="flex items-center gap-3 cursor-pointer select-none w-fit">
         <div className="relative">
           <input type="checkbox" className="sr-only" checked={hasProxyFee} onChange={e => setHasProxyFee(e.target.checked)} />
-          <div className={`w-10 h-6 rounded-full transition-colors duration-200 ${hasProxyFee ? 'bg-green-600' : 'bg-gray-300'}`} />
+          <div className={`w-10 h-6 rounded-full transition-colors duration-200 ${hasProxyFee ? 'bg-green-500' : 'bg-gray-300'}`} />
           <div className={`absolute top-1 left-1 w-4 h-4 bg-white rounded-full shadow transition-transform duration-200 ${hasProxyFee ? 'translate-x-4' : ''}`} />
         </div>
         <span className="text-sm font-medium text-gray-700">含代購手續費（×1.08）</span>
@@ -150,7 +150,7 @@ function JapaneseCalculator({ onSave }) {
           detail: `JPY ${Number(jpyAmount || 0).toLocaleString()}${hasProxyFee ? '（含代購費）' : ''}／${weightKg || 0} kg`,
         })}
         disabled={!hasInput}
-        className="w-full py-2 rounded-lg text-sm font-medium border-2 border-dashed border-green-300 text-green-600 hover:bg-green-50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+        className="w-full py-2 rounded-lg text-sm font-medium border-2 border-dashed border-green-300 text-green-500 hover:bg-green-50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
       >
         + 儲存
       </button>
@@ -208,7 +208,7 @@ function ComparisonList({ items, onRemove, onUpdate, onOrder }) {
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 flex-wrap mb-0.5">
                     <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${
-                      item.country === '韓國' ? 'bg-green-50 text-green-700' : 'bg-blue-50 text-blue-600'
+                      item.country === '韓國' ? 'bg-green-50 text-green-500' : 'bg-blue-50 text-blue-600'
                     }`}>
                       {item.country}
                     </span>
@@ -239,7 +239,7 @@ function ComparisonList({ items, onRemove, onUpdate, onOrder }) {
                           />
                           <button
                             onClick={() => handlePriceSave(item.id)}
-                            className="text-xs px-2 py-1 rounded-lg bg-green-600 text-white font-medium hover:bg-green-700"
+                            className="text-xs px-2 py-1 rounded-lg bg-green-500 text-white font-medium hover:bg-green-500"
                           >
                             儲存
                           </button>
@@ -247,7 +247,7 @@ function ComparisonList({ items, onRemove, onUpdate, onOrder }) {
                       ) : (
                         <button
                           onClick={() => handlePriceEdit(item)}
-                          className="text-sm font-bold text-green-600 hover:underline"
+                          className="text-sm font-bold text-green-500 hover:underline"
                         >
                           {hasPrice ? `NT$ ${formatNumber(selling)}` : '點擊輸入'}
                         </button>
@@ -256,7 +256,7 @@ function ComparisonList({ items, onRemove, onUpdate, onOrder }) {
                     {hasPrice && !isEditing && (
                       <div>
                         <p className="text-xs text-gray-400">利潤（扣稅5%）</p>
-                        <p className={`text-sm font-bold ${profit >= 0 ? 'text-green-600' : 'text-red-500'}`}>
+                        <p className={`text-sm font-bold ${profit >= 0 ? 'text-green-500' : 'text-red-500'}`}>
                           {profit >= 0 ? '+' : ''}NT$ {formatNumber(profit)}
                         </p>
                       </div>
@@ -267,7 +267,7 @@ function ComparisonList({ items, onRemove, onUpdate, onOrder }) {
                 <div className="flex flex-col items-end gap-2 flex-shrink-0">
                   <button
                     onClick={() => onOrder(item)}
-                    className="text-xs px-3 py-1.5 rounded-lg bg-green-600 text-white font-medium hover:bg-green-700 transition-colors"
+                    className="text-xs px-3 py-1.5 rounded-lg bg-green-500 text-white font-medium hover:bg-green-500 transition-colors"
                   >
                     訂購
                   </button>
@@ -419,7 +419,7 @@ export default function CostCalculator({ onOrder, savedItems, onAddItem, onRemov
             onClick={() => setActiveTab('korea')}
             className={`flex-1 py-3 px-4 text-sm font-medium transition-colors duration-150 ${
               activeTab === 'korea'
-                ? 'bg-green-50 text-green-700 border-b-2 border-green-500'
+                ? 'bg-green-50 text-green-500 border-b-2 border-green-500'
                 : 'text-gray-500 hover:text-gray-700 hover:bg-gray-50'
             }`}
           >
